@@ -3,8 +3,6 @@
 
 void dec2bin(unsigned long long int dec);
 int main(void) {
-	int bin[50] = { 0, };
-	int binLen = 0;
 	long long int decimal;
 
 	scanf("%llu", &decimal);
