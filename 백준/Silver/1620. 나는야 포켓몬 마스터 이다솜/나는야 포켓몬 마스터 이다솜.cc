@@ -12,6 +12,7 @@ int main(void) {
 		이때, 숫자 범위 내라면(>='0' && <='9') 숫자 변환 함수인 stoi 사용
 		stoi <---> to_string
 	*/
+	//이 두문장 없으면 시간초과
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 
