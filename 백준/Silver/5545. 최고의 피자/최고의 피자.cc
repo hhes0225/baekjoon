@@ -48,6 +48,9 @@ int main(void) {
 	for (int i = 0; i < caloryOfTopings.size(); i++) {
 		
 		tmp = (maxCalory + caloryOfTopings[i]) / (maxCaloryPrice + priceOfTopings);
+		
+		//이 두 문장을 if문 안에서 밖으로 빼기만 했을 뿐인데 맞았습니다가 떴다.
+		//조건부가 아니라 무지성으로 더해서 누적해야 누락되는 값 없이 다 더해져서 그런듯
 		maxCalory += caloryOfTopings[i];
 		maxCaloryPrice += priceOfTopings;
 
