@@ -32,6 +32,8 @@ int main(void) {
 		else {
 			sums.push_back(input + sums[i - 1]);
 		}
+		// for문으로 합 구하면 이중 포문 되어서 시간 초과 나니까
+		// 미리 누적합을 구해놓는다.
 	}
 
 	/*for (int i = 0; i < totalNum; i++) {
@@ -62,6 +64,9 @@ int main(void) {
 			result = sums[back - 1];
 		else{
 			result = sums[back - 1] - sums[front - 1 -1];
+			//구간별 누적값: 미리 구해놓은 누적값 - 이전 누적값
+			// ex) 3~5번째의 합 = 1~5번째 누적합 - 1~2번째 누적합
+			// 이렇게 하면 for문을 쓰지 않고 누적합을 구할 수 있다.
 		}
 
 		if (i < tryCount - 1) {
