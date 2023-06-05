@@ -74,7 +74,10 @@ int main(void) {
 			}
 		}
 	}
-
+	
+	//빈도수는 0이 최저이므로 0으로 설정
+	//첫번째 값의 second로 설정하지 말고 0으로 설정해야 맞는다!
+	//안그러면 for문에서 중복으로 검사해서 첫번째 키의 빈도수가 +1이 될 수 있기 때문
 	int maxKey=0;
 	int maxValue = 0;
 	bool isDuplicate;
