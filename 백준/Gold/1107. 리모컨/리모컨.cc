@@ -113,7 +113,7 @@ int main(void) {
 			isUnder = true;
 		}
 
-
+		//이때, 모든 숫자 버튼이 고장나면 + 혹은 -만으로 조작할 수밖에 없음.
 		if (clicks > from100 || brokenBtns.size()==10)
 			clicks = from100;
 
