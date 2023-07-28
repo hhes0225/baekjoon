@@ -24,7 +24,7 @@ int main(void) {
 
 	//cout << longestWord << endl;
 
-	for (int i = 0; i < longestWord+1; i++) {
+	for (int i = 0; i < longestWord; i++) {
 		for (int j = 0; j < words.size(); j++) {
 			if (words[j].size() < i || words[j][i]==NULL) {
 				continue;
