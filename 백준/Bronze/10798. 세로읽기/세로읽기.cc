@@ -26,7 +26,7 @@ int main(void) {
 
 	for (int i = 0; i < longestWord; i++) {
 		for (int j = 0; j < words.size(); j++) {
-			if (words[j].size() < i || words[j][i]==NULL) {
+			if (words[j].size() < i || words[j][i]==NULL) {//NULL문자를 제거하지 않으면 에러가 난다.
 				continue;
 			}
 			cout << words[j][i];
