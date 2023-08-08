@@ -19,6 +19,8 @@ int main(void) {
 	string name="";
 	string situation="";
 	map < string, bool, greater<string>> attend;
+	//attend를 string 오름차순으로 정렬하겠다.
+	//사실 나중에 벡터에서 정렬되므로 굳이 할필요는 없지만 공부하는 용도로 쓰자
 	vector<string> nameSort;
 
 	cin >> tCase;
