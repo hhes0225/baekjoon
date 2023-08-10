@@ -3,6 +3,11 @@
 
 using namespace std;
 
+//n과 m이 : 을 사이에 두고 주어진다. (1 ≤ n, m ≤ 100, 000, 000)
+//두 수를 최대한으로 약분하여 출력한다.
+//즉, 문자열로 입력받아서 :를 중심으로 숫자를 split 하고
+//그 다음으로 두 수의 최대공약수 GCD를 구하라
+
 int main(void) {
 	string input;
 	int frontNum, backNum;
