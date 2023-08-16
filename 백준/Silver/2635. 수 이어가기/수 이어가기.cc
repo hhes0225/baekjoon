@@ -31,6 +31,16 @@ int main(void) {
 	cin >> num1;
 
 	//틀린 이유 - 범위를 num2<num1이 아니라 num2<=num1로 했어야 함
+	//input :
+	//1
+	
+	//output :
+	//0
+	//1 1 0 1
+	    
+	//correct ans :
+	//4
+	//1 1 0 1
 	for (int num2 = 1; num2 <= num1; num2++) {
 		int tmpCount = 0;
 		substract1 = num1;
