@@ -7,6 +7,10 @@ using namespace std;
 
 //N개의 실수가 있을 때, 한 개 이상의 연속된 수들의 곱이 최대가 되는 부분을 찾아, 그 곱을 출력하는 프로그램을 작성하시오.
 
+//bruteForce: 84ms
+//dp_bottomUp: 4ms
+//시간복잡도 차이 대박
+
 
 double bruteForce(vector<double> numbers) {
 	double tmp;
