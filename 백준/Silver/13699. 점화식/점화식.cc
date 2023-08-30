@@ -18,6 +18,8 @@ unsigned long long int memo[MAX + 1] = { 0, };
 //...
 //주어진 입력 0 ≤ n ≤ 35에 대하여 t(n)을 출력하는 프로그램을 작성하시오.
 
+//****** unsigned long long 형을 반환하고 싶으면 반환형에 제발 반영해라...
+
 unsigned long long int memoization(unsigned long long int n) {
 	//cout << "!!!!!!!!!!!!! " << n << " !!!!!!!!!!\n";
 	unsigned long long int result=0;
