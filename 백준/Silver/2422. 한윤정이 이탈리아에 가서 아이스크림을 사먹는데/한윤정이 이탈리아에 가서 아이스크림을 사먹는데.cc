@@ -33,9 +33,12 @@ int main(void) {
 		int tmp1, tmp2;
 		cin >> tmp1 >> tmp2;
 
+		//pair도 정렬: e.g. (3, 1)의 경우는 아래 브루트포스 경우에서는 있을 수 없으므로(i=3이면 j=4부터 시작)
+		//3, 1 -> 1, 3 으로 정렬한다
 		bannedPair.push_back(make_pair(min(tmp1, tmp2), max(tmp1, tmp2)));
 	}
 
+	//이진 탐색(binary search)는 정렬된 상태에서만 가능하므로 정렬해준다.
 	sort(bannedPair.begin(), bannedPair.end());
 
 	//브루트포스로 3가지 쌍을 만드는 모든 조합을 순회
