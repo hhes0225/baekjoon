@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <queue>
 
 using namespace std;
 
@@ -27,6 +28,8 @@ using namespace std;
 	0	0	0	0	1	0	0	0	0	0
 	0	0	1	1	0	0	0	1	1	1
 	0	0	0	0	1	0	0	1	1	1
+
+ 	처음에는 DFS로 풀었으나 연습용으로 BFS로도 풀었음!
 */
 
 vector<vector<int>> farm;
@@ -37,6 +40,40 @@ int dx[4] = { -1, 1, 0, 0 };
 int dy[4] = { 0, 0, -1, 1 };
 
 int cater = 0;
+
+void bfs(int i, int j) {
+	// 첫 노드 방문 처리
+	visited[j][i] = true;
+
+	//큐에 삽입, 큐도 visited와 마찬가지로 2차원 큐여야 함
+	queue<pair<int, int>> qsearch;
+	qsearch.push({ i, j });//그러네 입력 줄때는 무조건 i는 x고 j 는 y니까 이대로 push해도 되는구나
+
+	while (!qsearch.empty()) {
+		//큐에서 삭제
+		pair<int, int> here = qsearch.front();
+		qsearch.pop();
+
+		for (int i = 0; i < 4; i++) {
+			int nextX = here.first + dx[i];
+			int nextY = here.second + dy[i];
+
+			//새로운 이동한 인덱스가 배열 범위 이내인지 확인
+			if ((nextX >= 0 && nextX < farm[0].size()) && (nextY >= 0 && nextY < farm.size())) {
+				//배추가 있는지 확인
+				if (farm[nextY][nextX] == 1) {
+					//방문했는지 확인
+					if (visited[nextY][nextX] == false) {
+						//dfs-재귀함수 / bfs - 큐에 삽입
+						//방문처리
+						visited[nextY][nextX] = true;
+						qsearch.push({ nextX, nextY });
+					}
+				}
+			}
+		}
+	}
+}
 
 void dfs(int i, int j) {
 	//들어온 것 방문처리
@@ -94,7 +131,8 @@ int main(void) {
 			for (int j = 0; j < col; j++) {
 				if(visited[i][j]==false && farm[i][j] == 1){
 					cater++;
-					dfs(j, i);//배열은 x y가 아니라 y x순이므로
+					bfs(j, i);//배열은 x y가 아니라 y x순이므로
+					//dfs(j, i);
 				}
 			}
 		}
