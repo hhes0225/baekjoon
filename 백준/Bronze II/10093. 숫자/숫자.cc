@@ -1,9 +1,9 @@
 #include <iostream>
-
+#include <cmath>
 using namespace std;
 
 int main(void){
-    int n, m;
+    long long int n, m;
     
     cin>>n>>m;
     
@@ -13,14 +13,14 @@ int main(void){
         cout<<"0\n";
     }
     else{
-        int bigger=max(n, m);
-        int smaller=min(n, m);
+        long long int bigger=max(n, m);
+        long long int smaller=min(n, m);
 
-        int gap=bigger-smaller-1;
+        long long int gap=bigger-smaller-1;
     
         cout<<gap<<"\n";
         
-        for(int i=smaller+1;i<bigger;i++){
+        for(long long int i=smaller+1;i<bigger;i++){
             cout<<i<<" ";
         }
         cout<<"\n";
