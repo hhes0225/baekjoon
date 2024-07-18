@@ -8,10 +8,10 @@ using namespace std;
 
 //greedy
 //왼쪽부터 num[i]<num[i+1]이면 num[i] 제거하는 게 더 큰 수를 만들 수 있음
+//문자를 스택에 넣고 현재 문자가 스택의 top 문자보다 크면 스택의 top을 제거
 
 stack<char> maxNum;
 string answer = "";
-bool duplicate=false;
 
 void greedyMaxNum(string number, int k){
 
@@ -24,7 +24,7 @@ void greedyMaxNum(string number, int k){
         maxNum.push(number[i]);
     }
     
-     // 남아 있는 k개의 문자를 제거
+    // 남아 있는 k개의 문자를 제거
     while (k > 0) {
         maxNum.pop();
         k--;
@@ -32,9 +32,7 @@ void greedyMaxNum(string number, int k){
     
     //스택을 문자열로 변환
     while(!maxNum.empty()){
-        if(maxNum.top()!='a'){
-            answer+=maxNum.top();
-        }
+        answer+=maxNum.top();
         maxNum.pop();
     }
     
