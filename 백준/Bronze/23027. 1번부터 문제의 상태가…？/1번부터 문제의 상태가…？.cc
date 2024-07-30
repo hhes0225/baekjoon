@@ -1,5 +1,6 @@
 #include<iostream>
 #include<string>
+#include<algorithm>
 using namespace std;
 
 int main(void){
@@ -8,31 +9,22 @@ int main(void){
     cin>>input;
 
     if(input.find('A')!=string::npos){
-        //input.replace(input.find('B'), 1, "A");
-        for(int i=0;i<input.size();i++){
-            if(input[i]=='B'||input[i]=='C'||input[i]=='D'||input[i]=='F'){
-                input[i]='A';
-            }
-        }
+        replace(input.begin(), input.end(), 'B', 'A');
+        replace(input.begin(), input.end(), 'C', 'A');
+        replace(input.begin(), input.end(), 'D', 'A');
+        replace(input.begin(), input.end(), 'F', 'A');
     }
     else if(input.find('B')!=string::npos){
-        for(int i=0;i<input.size();i++){
-            if(input[i]=='C'||input[i]=='D'||input[i]=='F'){
-                input[i]='B';
-            }
-        }
+        replace(input.begin(), input.end(), 'C', 'B');
+        replace(input.begin(), input.end(), 'D', 'B');
+        replace(input.begin(), input.end(), 'F', 'B');
     }
     else if(input.find('C')!=string::npos){
-        for(int i=0;i<input.size();i++){
-            if(input[i]=='D'||input[i]=='F'){
-                input[i]='C';
-            }
-        }
+        replace(input.begin(), input.end(), 'D', 'C');
+        replace(input.begin(), input.end(), 'F', 'C');
     }
     else{
-        for(int i=0;i<input.size();i++){
-            input[i]='A';
-        }
+        fill(input.begin(), input.end(), 'A');
     }
 
     cout<<input<<"\n";
