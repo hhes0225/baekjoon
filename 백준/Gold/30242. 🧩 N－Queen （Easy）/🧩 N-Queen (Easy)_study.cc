@@ -24,10 +24,10 @@ https://hoonably.github.io/posts/%EB%B0%B1%EC%A4%80-Python-N-Queen-Easy-30242%EB
 
 
 int N;
-vector<int> arr;
-vector<bool> row;
-vector<bool> x1;
-vector<bool> x2;
+vector<int> arr; // 열 번호 저장
+vector<bool> row; // 각 열에 퀸이 놓여 있는지 여부 저장
+vector<bool> x1; // 우상향 대각선
+vector<bool> x2; // 우하향 대각선
 
 // 백트래킹을 사용하여 N-Queen 문제를 해결하는 함수
 void Backtracking(int n) {
@@ -88,7 +88,12 @@ int main() {
         if (arr[i] != 0) {
             row[arr[i] - 1] = false; // 가로줄 제거
             x1[arr[i] - 1 + i] = false; // 오른쪽 위 방향 대각선 제거
+            //arr[i] - 1은 현재 행 i에 놓여 있는 퀸의 열 번호
+            //i는 현재 행의 번호
+            //arr[i] - 1 + i는 오른쪽 위 방향 대각선의 인덱스
             x2[arr[i] - 1 + (N - 1 - i)] = false; // 오른쪽 아래 방향 대각선 제거
+            //(N - 1 - i)는 현재 행 i에서 오른쪽 아래 방향 대각선의 인덱스
+            //arr[i] - 1 + (N - 1 - i)는 오른쪽 아래 방향 대각선의 인덱스
         }
     }
 
