@@ -3,6 +3,26 @@
 #include <cstdlib>
 using namespace std;
 
+/*
+N-Queen 문제는 크기가 n*n인 체스판 위에 N개의 퀸을 
+서로 공격할 수 없게 놓는 문제
+
+n-queen 이론 참고
+https://kang-james.tistory.com/entry/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-%EB%B0%B1%ED%8A%B8%EB%9E%98%ED%82%B9backtracking-%EC%95%8C%EC%95%84%EB%B3%B4%EA%B8%B0-N-Queen-%EB%AC%B8%EC%A0%9C-%ED%92%80%EC%9D%B4
+
+n-queen 구현 참고
+https://hoonably.github.io/posts/%EB%B0%B1%EC%A4%80-Python-N-Queen-Easy-30242%EB%B2%88/
+
+퀸은 수직, 수평, 대각선 방향으로 이동 가능하기 때문에,
+퀸 위치 기준으로 수직, 수평 대각선 방향에 또 다른 퀸을 놓으면 안됨(공격당함)
+
+수평 방향: 이미 각 행에 퀸을 놓기 때문에 체크할 필요가 없음.(행이 주어짐)
+수직 방향: 같은 수직선에 퀸이 놓이지 않도록 체크 필요
+대각선 방향: 두 종류의 대각선 체크하여 퀸이 서로 공격하지 못하도록 해야 함.
+
+*/
+
+
 int N;
 vector<int> arr;
 vector<bool> row;
@@ -18,9 +38,12 @@ void Backtracking(int n) {
         }
         cout << endl;
         exit(0); // 아예 종료
+        //return을 사용하면 현재 함수만 pop되고 호출한 함수로 돌아가서 다른 경로 계속 탐색하게 됨.
+        //이로 인해 불필요한 탐색 발생할 수 있음
+        //이를 방지하고 바로 종료시키기 위해 exit(0)을 사용함
     }
 
-    // 이미 퀸이 놓여 있는 경우 다음 행으로 이동
+    // 이미 퀸이 놓여 있는 경우, 퀸을 둘 수 없음. 따라서 다음 행으로 이동
     if (arr[n] != 0) {
         Backtracking(n + 1);
         return;
@@ -35,6 +58,7 @@ void Backtracking(int n) {
             row[i] = false; // 가로줄 제거
             x1[i + n] = false; // 오른쪽 위 방향 대각선 제거
             x2[i + (N - 1 - n)] = false; // 오른쪽 아래 방향 대각선 제거
+            //제거 == 이제 이 곳에는 퀸을 두면 공격받는다
 
             // 다음 행에 대해 재귀 호출
             Backtracking(n + 1);
