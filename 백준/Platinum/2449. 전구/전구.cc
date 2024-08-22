@@ -43,18 +43,25 @@ int main() {
         cin >> colors[i];
     }
 
+    // DP 테이블 초기화: dp[i][j]는 구간 [i, j]를 하나의 색으로 바꾸는 최소 횟수를 의미
     vector<vector<int>> dp(N, vector<int>(N, 0));
 
-    for (int length = 2; length <= N; length++) {
-        for (int i = 0; i <= N - length; i++) {
-            int j = i + length - 1;
-            dp[i][j] = INT_MAX;
-            for (int k = i; k < j; ++k) {
+    // 길이 2 이상인 구간에 대해 DP 테이블 채우기
+    for (int length = 2; length <= N; length++) {  // 구간의 길이를 2부터 N까지 점차적으로 증가시킴
+        for (int i = 0; i <= N - length; i++) {    // 구간의 시작점 i
+            int j = i + length - 1;                // 구간의 끝점 j (구간의 길이가 length)
+            dp[i][j] = INT_MAX;                    // dp[i][j]를 최댓값으로 초기화
+
+            for (int k = i; k < j; ++k) {          // 구간 [i, j]를 두 부분 [i, k]와 [k+1, j]로 나누기
+                // dp[i][k]: 구간 [i, k]를 하나의 색으로 바꾸는 최소 횟수
+                // dp[k+1][j]: 구간 [k+1, j]를 하나의 색으로 바꾸는 최소 횟수
+                // colors[i] != colors[j] -> 두 구간을 하나의 색으로 합치려면 1회 추가
                 dp[i][j] = min(dp[i][j], dp[i][k] + dp[k + 1][j] + (colors[i] != colors[j] ? 1 : 0));
             }
         }
     }
 
+    // 결과 출력: dp[0][N-1]는 전체 구간 [0, N-1]을 하나의 색으로 바꾸는 최소 횟수
     cout << dp[0][N-1] << endl;
 
     return 0;
