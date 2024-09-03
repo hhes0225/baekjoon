@@ -6,6 +6,13 @@
 using namespace std;
 
 /*
+    문제 1: pq 정렬
+
+    문제 2: vector<Cost> totalCost 
+    -> vector<vector<int>> totalCost(totalcost[node][price]:node에 price로 도달했을 때 최소시간)
+
+    문제 3: adjList 정렬
+    
     <adjList에서 duration에 따라 정렬해주어야 하는 이유>
     우선순위 큐의 효율성:
     정렬된 간선 리스트를 사용하면, 우선순위 큐에 삽입되는 간선들이 이미 정렬된 상태이므로, 큐의 삽입 및 삭제 연산이 더 효율적으로 수행됩니다.
