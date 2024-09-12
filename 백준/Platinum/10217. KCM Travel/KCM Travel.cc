@@ -14,6 +14,10 @@ using namespace std;
     문제 3: adjList 정렬
     
     <adjList에서 duration에 따라 정렬해주어야 하는 이유>
+    비용은 넘냐 안넘냐만 체크해주면 됨
+    최소 기간을 찾는 것이므로 duration을 따라 정렬 필요
+
+    ======================================================
     우선순위 큐의 효율성:
     정렬된 간선 리스트를 사용하면, 우선순위 큐에 삽입되는 간선들이 이미 정렬된 상태이므로, 큐의 삽입 및 삭제 연산이 더 효율적으로 수행됩니다.
     이는 큐의 내부 정렬 작업을 줄여주어, 전체 알고리즘의 실행 시간을 단축시킵니다.
@@ -47,7 +51,7 @@ void djikstra(int start){
     totalCost[start][budget]=0;
     
     priority_queue<PIPII, vector<PIPII>, greater<PIPII>> pq;
-    pq.push({0, {start, budget}});
+    pq.push({0, {start, budget}}); //duration, {node, budget} 형식으로 큐에 저장
 
     while(!pq.empty()){
         auto curNodeInfo = pq.top();
@@ -58,14 +62,16 @@ void djikstra(int start){
         pq.pop();
 
         if(curTime>totalCost[cur][curBudget]) continue;
+        //현재 노드의 duration이 dp Table의 duration보다 크다면 체크할 필요 없음
 
 
         for(size_t i=0;i<adjList[cur].size();i++){
             auto nextNode = adjList[cur][i].first;
             auto nextCost = adjList[cur][i].second;
 
+            //기존 dp 테이블에 저장된 duration보다 작다면(더 최소 기간이라면)
             if(curTime+nextCost.duration<totalCost[nextNode][curBudget-nextCost.price]){
-                if(curBudget-nextCost.price>=0){
+                if(curBudget-nextCost.price>=0){//해당 루트로 갔을 때 비용을 초과하지 않는다면
                     //방문처리
                     totalCost[nextNode][curBudget-nextCost.price]=curTime+nextCost.duration;
                     
