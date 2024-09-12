@@ -1,125 +1,59 @@
-#include <iostream>
-#include <vector>
-#include <queue>
-#include <algorithm>
-#include <climits>
+#include<iostream>
+#include<vector>
+#include<queue>
+
 using namespace std;
-
-/*
-    <adjList에서 duration에 따라 정렬해주어야 하는 이유>
-    우선순위 큐의 효율성:
-    정렬된 간선 리스트를 사용하면, 우선순위 큐에 삽입되는 간선들이 이미 정렬된 상태이므로, 큐의 삽입 및 삭제 연산이 더 효율적으로 수행됩니다.
-    이는 큐의 내부 정렬 작업을 줄여주어, 전체 알고리즘의 실행 시간을 단축시킵니다.
-    탐색의 효율성:
-    정렬된 간선 리스트를 사용하면, 탐색 과정에서 불필요한 간선을 탐색하지 않게 됩니다.
-    이는 탐색 과정에서의 비교 연산을 줄여주어, 전체 알고리즘의 실행 시간을 단축시킵니다.
-*/
-
-class Cost{
-public:
-    int price;
-    int duration;
-
-    Cost():price(0), duration(INT_MAX){};
-    Cost(int price, int duration):price(price), duration(duration){}
+struct ticket {
+    int v;
+    int c;
+    int d;
 };
 
-int airports;
-int budget;
-int tickets;
+vector<vector<ticket>> ticketInfo;
+int T, N, M, K,u,v,c,d;
+const int MAX = 10'001;
+const int INF = 1'000'000'000;
+//행은 지원 비용, 열은 노드 
+int minDist[MAX][100];
 
-vector<vector<pair<int, Cost>>> adjList;
-vector<vector<int>> totalCost;
-//totalCost[node][budget] : 각 노드에서 비용에 따른 최소 시간 기록
-//node 번에서 budget 돈을 가지고 있는 상태에서 가지는 최소 시간
+void Solution();
 
-typedef pair<int, pair<int, int>> PIPII;
-
-
-void djikstra(int start){
-    totalCost[start][budget]=0;
-    
-    priority_queue<PIPII, vector<PIPII>, greater<PIPII>> pq;
-    pq.push({0, {start, budget}});
-
-    while(!pq.empty()){
-        auto curNodeInfo = pq.top();
-        int curTime=curNodeInfo.first;
-        int cur = curNodeInfo.second.first;
-        int curBudget = curNodeInfo.second.second;
-        
-        pq.pop();
-
-        if(curTime>totalCost[cur][curBudget]) continue;
-
-
-        for(size_t i=0;i<adjList[cur].size();i++){
-            auto nextNode = adjList[cur][i].first;
-            auto nextCost = adjList[cur][i].second;
-
-            if(curTime+nextCost.duration<totalCost[nextNode][curBudget-nextCost.price]){
-                if(curBudget-nextCost.price>=0){
-                    //방문처리
-                    totalCost[nextNode][curBudget-nextCost.price]=curTime+nextCost.duration;
-                    
-                    //큐에 다음 노드 푸시하기
-                    pq.push({curTime+nextCost.duration, {nextNode,curBudget-nextCost.price}});
-                }
-                
-            }
-            
+void Input() {
+    cin >> T;
+    for (int i = 0; i < T; i++) {
+        cin >> N >> M >> K;
+        ticketInfo.clear();
+        ticketInfo.resize(N);
+        for (int j = 0; j < K; j++) {
+            cin >> u >> v >> c >> d;
+            ticketInfo[--u].push_back({ --v,c,d });
         }
+        Solution();
     }
-    
-    
+}
+//매 방문마다 현재 비용이 줄어들기 때문에, 다이나믹프로그래밍도 가능하다(knap-sack문제와 유사).
+int KCM(int curMoney,int node) {
+    int& ret = minDist[curMoney][node];
+    if (ret != -1) return ret;
+    if (node == N-1) return ret=0;
+
+    ret = INF;
+    for (auto& elem : ticketInfo[node]) {
+        if (curMoney >= elem.c) ret = min(ret, KCM(curMoney -     elem.c, elem.v)+elem.d);
+    }    
+    return ret;
+}
+
+void Solution() {
+    fill(&minDist[0][0], &minDist[MAX-1][100], -1);
+
+    int Ans = KCM(M, 0);
+    if (Ans == INF) cout << "Poor KCM" << '\n';
+    else cout << Ans << '\n';
 }
 
 int main() {
-    int tCase;
-    cin>>tCase;
-
-    cin>>airports>>budget>>tickets;
-
-    adjList.resize(airports+1);
-    totalCost.resize(airports+1, vector<int>(budget+1, INT_MAX));
-    
-    for(int i=0;i<tickets;i++){
-        int from, to, pr, du;
-        cin>>from>>to>>pr>>du;
-
-        adjList[from].push_back({to, Cost(pr, du)});
-    }
-
-    // 간선 리스트 정렬
-    for (size_t i = 1; i <= airports; i++) {
-    sort(adjList[i].begin(), adjList[i].end(), [](const pair<int, Cost>& a, const pair<int, Cost>& b) {
-        return a.second.duration < b.second.duration;
-    });
-}
-
-
-    djikstra(1);//시작 노드는 무조건 첫 번째 노드, ICN
-
-    
-    int result = INT_MAX;
-    for (int i = 0; i <= budget; i++) {
-        result = min(result, totalCost[airports][i]);
-    }
-
-    /* 각 공항까지 도달하기 위해 필요한 최소기간, 이때 소모되는 비용
-    for(auto it:totalCost){
-        cout<<it.price<<","<<it.duration<<"\n";
-    }
-    cout<<"\n";
-    */
-
-    if(result==INT_MAX){
-        cout<<"Poor KCM\n";
-    }
-    else{
-        //cout<<"LA(비용, 시간): "<<totalCost[totalCost.size()-1].price<<" "<<totalCost[totalCost.size()-1].duration<<endl;
-        cout<<result<<endl;
-    }
-    
-    return 0;
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    Input();
 }
