@@ -1,44 +1,84 @@
 #include <iostream>
+#include <vector>
 #include <algorithm>
-
 using namespace std;
 
-int N,S,temp, cnt = 0, maxnum,maxidx;
-int arr[51];
+vector<int> nums;
 
-int main (){
-    ios::sync_with_stdio(0);
-    cin.tie(0); cout.tie(0);
+//n, m 인덱스의 값 교환
+void switching(int n){
+    int tmp = nums[n+1];
+    nums[n+1] = nums[n];
+    nums[n] = tmp;
+}
+//결과 출력
+void printNums(){
+    for(auto it: nums){
+        cout<<it<<" ";
+    }
+    cout<<"\n";
+}
+
+int main() {
+    int length;
     
-    cin >> N;
-    for(int i = 0; i < N; i++){
-        cin >> arr[i];
-    }
-    cin >> S;
+    vector<int> sorted;
+    int changeable=0;
 
-    for(int i = 0; i < N - 1 && S != 0; i++){
-        cnt = 0;
-        maxnum = arr[i];
-        maxidx = i;
-        for(int j = i + 1; j < N && cnt < S;j++,cnt++){
-            if(maxnum < arr[j]){
-                maxnum = arr[j];
-                maxidx = j;
-            }
-        }
-        int j = maxidx;
-        if(maxidx > i){
-            while(j != i){
-                temp = arr[j];
-                arr[j] = arr[j - 1];
-                arr[j - 1] = temp;
-                j-- ;
-            }
-        }
-        S -= (maxidx - i);
-    }   
-    for(int i = 0; i < N; i++){
-        cout << arr[i] << " ";
+    //입력받기
+    cin>>length;
+    nums.resize(length);
+
+    for(int i=0;i<length;i++){
+        cin>>nums[i];
     }
-    return (0);
+    cin>>changeable;
+
+    //내림차순 정렬 답지
+    sorted=nums;
+    sort(sorted.begin(), sorted.end());
+    reverse(sorted.begin(), sorted.end());
+
+    //주어진 횟수만큼 sort
+    while(changeable>0){
+        //정렬된 상태라면 더 검사하지 않고 반복문 탈출
+        if(nums==sorted){
+            break;
+        }
+
+        for(int i=0;i<nums.size()-1;i++){
+            //배열 중 최대값의 인덱스 찾기
+            int idx = max_element(nums.begin()+i, nums.end())-nums.begin();
+            //cout<<idx<<" idx is max"<<endl;
+            //cout<<"but "<< changeable<<" imes left\n";
+
+            //이 인덱스가 변경 가능 횟수보다 크다면
+            if(changeable<idx){
+                //검사 시작 인덱스 ~ 변경 가능 횟수 만큼의 인덱스 범위만 검사해서 범위 내의 최대값의 인덱스 찾기
+                idx = max_element(nums.begin()+i, nums.begin()+i+changeable+1)-nums.begin();
+                //cout<<idx<<" is less than changeable and max"<<endl;
+            }
+
+            //변경할 인덱스의 값이 검사 시작 인덱스 값보다 클 경우에만 변경
+            if(nums[i]<nums[idx]){
+                for(int j=idx-1;j>=i;j--){
+                    //변경 가능할 경우에만 변경, 변경 시 changeable 1 차감
+                    if(changeable>0){
+                        switching(j);
+                        changeable--;
+                    }
+                    //cout<<j<<", "<<idx<<endl;
+                    
+                }
+            }
+            
+            //printNums();
+        }
+        //cout<<changeable<<" times left\n";
+    }
+
+    //결과 출력
+    printNums();
+    
+    return 0;
 }
