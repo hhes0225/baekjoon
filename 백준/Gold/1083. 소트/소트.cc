@@ -47,6 +47,9 @@ int main() {
         }
 
         for(int i=0;i<nums.size()-1;i++){
+            if(nums[i]==sorted[i])
+                continue;
+            
             //배열 중 최대값의 인덱스 찾기
             int idx = max_element(nums.begin()+i, nums.end())-nums.begin();
             //cout<<idx<<" idx is max"<<endl;
