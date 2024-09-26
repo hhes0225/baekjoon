@@ -47,9 +47,9 @@ int main() {
         }
 
         for(int i=0;i<nums.size()-1;i++){
-            if(nums[i]==sorted[i]){//답지와 같은 위치라면 이상적 위치임
+            /*if(nums[i]==sorted[i]){//답지와 같은 위치라면 이상적 위치임
                 continue;
-            }
+            }*/
             
             //배열 중 최대값의 인덱스 찾기
             int idx = max_element(nums.begin()+i, nums.end())-nums.begin();
