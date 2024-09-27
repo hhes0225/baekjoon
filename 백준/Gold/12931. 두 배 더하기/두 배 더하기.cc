@@ -4,6 +4,13 @@
 using namespace std;
 
 /*
+    다음과 같은 두 연산을 수행할 수 있다.
+
+    - 배열에 있는 값 하나를 1 증가시킨다.
+    - 배열에 있는 모든 값을 두 배 시킨다.
+*/
+
+/*
     문제: 0으로 채워진 배열을 B 배열로 만든다
     풀이: B 배열을 0으로 만들어나가는 과정
 
@@ -65,7 +72,7 @@ int main() {
                 checkZeros++;
             }
         }
-        if(checkZeros==len){
+        if(checkZeros==len){//배열 모든 요소가 0이라면 탈출
             isAllZero=true;
             continue;
         }
