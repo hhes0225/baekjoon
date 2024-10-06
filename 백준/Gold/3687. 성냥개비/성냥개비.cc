@@ -33,10 +33,10 @@ void makeMin(int num){
     dpTable[6]=6;//0대신 6
 
     // 성냥개비가 9개 이상일 때부터 최소 수를 점화식을 이용해 구함
-    for(int i=9;i<101;i++){
+    for(int i=9;i<101;i++){//i==현재 성냥개비 개수
         // dpTable[i-j]는 i-j개의 성냥개비로 만들 수 있는 최소 수
         // 그 수 뒤에 j개의 성냥개비로 만들 수 있는 숫자를 붙여서 새로운 수를 만듦
-        for(int j=2; j<8; j++){
+        for(int j=2; j<8; j++){//j==사용한 성냥개비 개수
             dpTable[i] = min(dpTable[i], dpTable[i-j]*10 + matches_min[j]);
         }
     }
