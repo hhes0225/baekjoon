@@ -80,12 +80,17 @@ int main() {
     }
 
     // 냅색 문제를 해결하기 위한 DP 배열 초기화
+    //dp[j]는 현재까지 계산된 j명의 아이들까지의 최대 사탕의 양
     vector<int> dp(minCry, 0);
 
     // 각 연결 요소에 대해 DP 배열을 업데이트하여 최대 사탕의 양 계산
-    for (int i = 0; i < componentSize.size(); i++) {
+    for (int i = 0; i < componentSize.size(); i++) {//연결 요소별로 각각의 크기와 사탕의 총합 고려
         for (int j = minCry - 1; j >= componentSize[i]; j--) {
             dp[j] = max(dp[j], dp[j - componentSize[i]] + componentCandy[i]);
+            //dp[j - componentSize[i]]는 현재 연결 요소를 포함하지 않았을 때, 
+            //j - componentSize[i]명의 아이들까지의 최대 사탕의 양
+            //dp[j - componentSize[i]] + componentCandy[i]는 현재 연결 요소를 포함했을 때, 
+            //j명의 아이들까지의 최대 사탕의 양
         }
     }
 
