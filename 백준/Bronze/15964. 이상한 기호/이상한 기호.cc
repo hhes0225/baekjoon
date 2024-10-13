@@ -4,10 +4,12 @@ using namespace std;
 
 int main() {
     long long res;
-    int a, b;
+    long long a, b;
     cin>>a>>b;
 
-    cout<<(a+b)*(a-b)<<"\n";
+    res=(a+b)*(a-b);
+
+    cout<<res<<"\n";
     
 
     
