@@ -4,6 +4,14 @@
 using namespace std;
 typedef pair<int, int> PII;
 
+/*
+    https://www.acmicpc.net/problem/2293
+    이 문제와 비슷한 문제.
+
+    단 위 문제는 동전을 무한정 사용할 수 있었지만
+    이 문제는 동전 개수도 정해져 있음
+*/
+
 int t, k;
 vector<pair<int, int>> coins;
 vector<int> dpTable;//i원 만드는 경우의 수
