@@ -15,13 +15,14 @@ int twoPointer(){
     for(int i=0;i<nums.size();i++){
 
         //j가 배열 크기 이내, 이전까지의 합+j의 합이 s 이상이어야 함
-        while(j<n && sum+nums[j]<s){
+        while(j<n && sum<s){
             sum+=nums[j];
             j++;
         }
 
         //cout<<i<<"일때, "<<sum<<"\n";
-        result=min(result, j-i+1);
+        if(sum>=s)  
+            result=min(result, j-i);
         sum-=nums[i];
 
     }
