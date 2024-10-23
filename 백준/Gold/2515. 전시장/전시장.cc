@@ -19,6 +19,7 @@ void dpFunc(){
     for(int i=1;i<n;i++){
         dp[i]=dp[i-1];
 
+        //이분 탐색으로 이전 그림들 중 S 이상의 높이 차이가 나는 최초의 그림 찾기
         int left =0, right=i-1, best=-1;
         while(left<=right){
             int mid=(left+right)/2;
