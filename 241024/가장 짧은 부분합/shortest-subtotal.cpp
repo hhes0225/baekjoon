@@ -39,7 +39,13 @@ int main() {
         cin>>nums[i];
     }
 
-    cout<<twoPointer()<<"\n";
+    int result = twoPointer();
+
+    if(result == 1e5){
+        cout<<-1<<"\n";
+    }
+    else
+        cout<<twoPointer()<<"\n";
 
     return 0;
 }
