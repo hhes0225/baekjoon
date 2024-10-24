@@ -15,7 +15,7 @@ int dpFunc(){
         int dup=-1;
         int right=i-1;
 
-        while(left<right){
+        while(left<=right){
             //cout<<i<<": "<<num[i]<<", "<<num[left]<<"\n";
             if(num[i]==num[left]){
                 dup=left;
