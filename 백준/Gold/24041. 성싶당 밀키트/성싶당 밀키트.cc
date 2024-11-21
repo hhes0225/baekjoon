@@ -64,6 +64,9 @@ long long binarySearch(long long N, long long G, long long K){
 	//left는 날짜의 최소값, right는 날짜의 최대값
 	//right는 INTMAX로 해도 되지만 시간초과가 날 수 있다.
 	//20억이 되는 이유: G가 10억이 되게 하기 위한 최대값은 20억이 되기 때문
+		//부패속도 느려야 날짜 커짐
+		//유통기한 길수록 날짜 커짐
+		//세균수 합이 10^9마리가 되기 위해 20억의 최대 날짜 필요
 
     while(left<=right){
         long long mid = (left+right)/2;
