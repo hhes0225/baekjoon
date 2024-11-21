@@ -57,15 +57,15 @@ int main()
 	while (left <= right) {
 
 		//left기준 왼쪽의 k 개수와, right기준 오른쪽의 k 개수 확인
-		int kCount1 = leftKCount[RIndice[left]];
-		int kCount2 = rightKCount[RIndice[right]];
+		int leftK = leftKCount[RIndice[left]];
+		int rightK = rightKCount[RIndice[right]];
 
 		//right - left + 1 : 가운데 있는 r의 개수
-		//min(kCount1, kCount2) * 2: 현재 양 끝에서 사용할 수 있는 최소 K
-		result = max(result, right - left + 1 + (min(kCount1, kCount2) * 2));
+		//min(leftK, rightK) * 2: 현재 양 끝에서 사용할 수 있는 최소 K
+		result = max(result, right - left + 1 + (min(leftK, rightK) * 2));
 
 		//왼쪽의 k가 더 많을때
-		if (kCount1 > kCount2) {
+		if (leftK > rightK) {
 			right--;
 		}
 
