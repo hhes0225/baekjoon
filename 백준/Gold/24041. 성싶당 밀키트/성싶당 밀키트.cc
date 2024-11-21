@@ -1,8 +1,12 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
-
 using namespace std;
+
+/*
+	DP?-> 1e9 ->
+*/
+
 long long N, G, K;
 long long s=1000000001,e=2000000001,x;
 long long info[200001][3] = { 0 }; // S L O
