@@ -61,16 +61,20 @@ bool isSafe(long long x, long long G, long long K){
 
 long long binarySearch(long long N, long long G, long long K){
     long long left =1, right =2e9, answer =0;
+	//left는 날짜의 최소값, right는 날짜의 최대값
+	//right는 INTMAX로 해도 되지만 시간초과가 날 수 있다.
+	//20억이 되는 이유: G가 10억이 되게 하기 위한 최대값은 20억이 되기 때문
 
     while(left<=right){
         long long mid = (left+right)/2;
 
         if(isSafe(mid, G, K)){
+		//먹을 수 있다면
             answer=mid;
-            left=mid+1;
+            left=mid+1;//최대값을 찾기 위해 mid 다음날부터 다시 이분탐색
         }
-        else{
-            right=mid-1;
+        else{//먹을 수 없다면
+            right=mid-1;//그 이후는 아예 못먹기 때문에 이전날까지 다시 이분탐색
         }
     }
 
