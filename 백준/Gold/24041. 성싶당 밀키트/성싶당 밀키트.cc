@@ -4,7 +4,10 @@
 using namespace std;
 
 /*
-	DP?-> 1e9 ->
+	DP?-> 날짜 1e9 ->너무 오래 걸림
+
+
+
 */
 
 long long N, G, K;
