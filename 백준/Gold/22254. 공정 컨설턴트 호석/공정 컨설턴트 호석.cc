@@ -1,6 +1,22 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/*
+    # 매개 변수 탐색
+    - 이진 탐색(Binary search)와 상당히 유사
+    - 최적화 문제를 "결정 문제"로 풀 수 있는 알고리즘
+    - 시간 복잡도(Time complexity): O(log N)
+
+    # 매개 변수 탐색(Parametric Search)을 사용하는 경우
+    - 어떤 시점까지는 조건을 만족하지만, 그 후로는 조건을 만족하지 않는 경우. 조건을 만족하는 최대값
+    - 어떤 시점까지는 조건을 만족하지 않지만, 그 후로는 조건을 만족하는 경우. 조건을 만족하는 최소값
+    -> 조건에 만족하는 최소값/최대값을 찾는 문제
+
+    # 매개변수 param과 결정함수fn(param)
+    - param == mid ==  (left + right) / 2
+    - fn(param) == param이 조건을 만족하면 true를, 만족하지 않으면 false를 반환, 이후 이 결과에 따라 param이 변경됨
+*/
+
 int n, x;
 vector<int> duration;
 
@@ -11,7 +27,7 @@ bool operatable(int lines){
     //최소 작업시간이 필요하므로 최소 힙 사용
     priority_queue<int, vector<int>, greater<int>> pq;
 
-    //i개의 생산 라인에 초기 작업 추가
+    //lines개(==mid) 의 생산 라인에 초기 작업 추가
     for(int i=0;i<lines;i++){
         pq.push(duration[i]);
     }
@@ -44,7 +60,8 @@ int main() {
     }
 
     //이분탐색
-
+    //left == 공정 라인 최소 개수 == 1
+    //right == 공정 라인 최대 개수 == n(모든 업무가 서로 다른 라인에서 처리)
     int left=1, right=n;
     int answer=-1;
 
