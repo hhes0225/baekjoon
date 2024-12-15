@@ -23,17 +23,13 @@ int dpFunc(int n){
     dp[0]=1;
 
     for(int i=1;i<n;i++){
-        int lastNum=arr[i];
-        int bigger=1;
         
         for(int j=i-1;j>=0;j--){
-            if(lastNum<arr[j]){
-                bigger++;
-                lastNum=arr[j];
+            if(arr[i]<arr[j]){
+                dp[i]=max(dp[i], dp[j]+1);
             }
         }
-
-        dp[i]=max(dp[i], bigger);
+ 
     }
 
     /*
@@ -45,7 +41,7 @@ int dpFunc(int n){
     */
 
     
-    return dp[n-1];
+    return *max_element(dp.begin(), dp.end());
 }
 
 //이진 탐색 기반으로 시간복잡도를 O(nlogn)까지 줄일 수 있다.
@@ -87,6 +83,6 @@ int main() {
         cin>>arr[i];
     }
 
-    cout<<dpFunc2(n)<<"\n";
+    cout<<dpFunc(n)<<"\n";
     return 0;
 }
