@@ -23,7 +23,7 @@ typedef pair<int, int> PII;
 vector<PII> posters;
 vector<int> compress;
 vector<int> wall;
-vector<int> visiblePoser;
+set<int> visiblePoser;//set 쓰는게 더 나았을듯
 
 
 int main() {
@@ -59,16 +59,15 @@ int main() {
 
     for(int i=0;i<MAX;i++){
         if(wall[i]!=-1){
-            visiblePoser.push_back(wall[i]);
+            visiblePoser.insert(wall[i]);
         }
     }
 
     //같은 포스터인데 다른 포스터 위에 일부 가린 경우 중복 제거
     //ex. 11122111
     //unique 사용하기 위해 정렬되어 있어야 함
-    //원소가 연속되지 않으면 중복으로 간주하지 않으므로 제거되지 않기 때문
-    sort(visiblePoser.begin(), visiblePoser.end());
-    visiblePoser.erase(unique(visiblePoser.begin(), visiblePoser.end()), visiblePoser.end());
+    //sort(visiblePoser.begin(), visiblePoser.end());
+    //visiblePoser.erase(unique(visiblePoser.begin(), visiblePoser.end()), visiblePoser.end());
 
     /*
     for(auto it:visiblePoser){
