@@ -24,7 +24,7 @@ vector<PII> complete;//완료, 쇼핑몰 빠져나가기 전
 
 void assignCounter(int n, int k){
     //대기시간 짧고, 카운터 번호 작은 것부터!
-    priority_queue<PLI, vector<PLI>, greater<PLI>> pq;
+    priority_queue<PII, vector<PII>, greater<PII>> pq;
 
     for(int i=0;i<k;i++){
         pq.push({0LL, i});//{대기시간, 카운터번호}
@@ -101,9 +101,6 @@ int main() {
 }
 
 /*
-//개삽질 ver. 이것도 맞긴 함.
-//틀린 이유는 escapeStore에서 ll i로 안해줘서 그랬음.
-
 void payCounter(int k){
     priority_queue<PII> finish;//{카운터, 회원번호}
 
