@@ -101,6 +101,9 @@ int main() {
 }
 
 /*
+//개삽질 ver. 이것도 맞긴 함.
+//틀린 이유는 escapeStore에서 ll i로 안해줘서 그랬음.
+
 void payCounter(int k){
     priority_queue<PII> finish;//{카운터, 회원번호}
 
