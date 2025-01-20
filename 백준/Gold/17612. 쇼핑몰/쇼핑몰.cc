@@ -7,6 +7,7 @@ typedef tuple<ll, int, int> T;//{종료시간, 계산대, 회원id}
 
 /*
     문제를 읽고 자체 태그맞추기: pq 써야겠다
+    (뭔가 dp같이 다른 알고리즘은 안써도 될것 같았음)
 
     처음에는(5분 태그맞추기)
     계산대 동시에 빠져나올 때 써야겠다 라고 생각했는데
@@ -101,6 +102,9 @@ int main() {
 }
 
 /*
+//개삽질 ver
+//확인해보니까 이것도 맞긴 맞음. (시간+메모리 개잡아먹긴 하지만)
+//틀렸던 이유는 escapeStore에서 for문의 i를 ll로 하지 않았기 때문
 void payCounter(int k){
     priority_queue<PII> finish;//{카운터, 회원번호}
 
