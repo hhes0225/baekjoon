@@ -11,7 +11,10 @@ int main() {
 
     int dstDay = a*24*60+b*60+c;
 
-    cout<<dstDay-today<<"\n";
+    if(dstDay<today){
+        cout<<-1<<"\n";
+    }
+    else    cout<<dstDay-today<<"\n";
 
     return 0;
 }
