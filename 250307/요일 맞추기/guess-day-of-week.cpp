@@ -8,7 +8,7 @@ int main() {
     cin >> m1 >> d1 >> m2 >> d2;
 
     int month[13]={0,31,28,31,30,31,30,31,31,30,31,30,31};
-    string dayName[7]={"Mon", "Tue", "Wed", "Thu", "Tri", "Sat", "Sun"};
+    string dayName[7]={"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
 
     int gap=0;
 
