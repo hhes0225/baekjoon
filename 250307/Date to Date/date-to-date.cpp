@@ -20,8 +20,9 @@ int main() {
         ans+=numOfDays[i];
     }
 
-    //마지막달: d2 일수 더하기
-    ans+=d2;
+    if(m1!=m2)
+        //마지막달: d2 일수 더하기
+        ans+=d2;
 
     cout<<ans<<"\n";
 
