@@ -48,7 +48,7 @@ int main() {
     }
     day2+=d2;
 
-    int gap=day2-day1+1;
+    int gap=day2-day1;
 
     int ans=gap/7;
     
