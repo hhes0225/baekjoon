@@ -41,10 +41,17 @@ int main() {
     }
 
     int group=0;
-    for(int i=1;i<MAX;i++){
-        if(simul[i-1]<2&&simul[i]>=2) group++;
+    bool inGroup = false;
+    for (int i = 0; i < MAX; i++) {
+        if (simul[i] >= 2) {
+            if (!inGroup) {
+                group++;
+                inGroup = true;
+            }
+        } else {
+            inGroup = false;
+        }
     }
-    
     /*
     for(int i=985;i<1010;i++){
         cout<<i-offset<<": "<<simul[i]<<"\n";
