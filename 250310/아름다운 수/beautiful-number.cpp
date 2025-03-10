@@ -22,23 +22,35 @@ using namespace std;
 
 */
 
-
 int n;
 vector<int> num;
 long long ans=0;
 
-void backtracking(int depth, string cur){
+bool isBeautiful(){
+    for(int i=0;i<n;i+=num[i]){
+        //연속하여 해당 숫자만큼 나올 수 없는 경우
+        if(i+num[i]-1>=n) return false;
+
+        for(int j=i;j<i+num[i];j++){
+            if(num[j]!=num[i]) return false;//해당 구간 내에서 연속하지 않는 경우
+        }
+    }
+
+    return true;
+}
+
+void backtracking(int depth){
     if(depth==n){
-        ans++;
+        if(isBeautiful()) ans++;
         return;
     }
 
     for(int d=1;d<=4;d++){
-        if(depth+d<=n){
-            string block(d, char('0'+d));
-            //cout<<block<<"\n";
-            backtracking(depth+d, cur+block);
-        }
+        num.push_back(d);
+
+        backtracking(depth+1);
+
+        num.pop_back();
     }
     
     return;
@@ -47,7 +59,7 @@ void backtracking(int depth, string cur){
 int main() {
     cin >> n;
     
-    backtracking(0, "");
+    backtracking(0);
 
     cout<<ans<<"\n";
 
