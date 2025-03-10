@@ -38,7 +38,7 @@ void backtracking(int prev, int depth, int count){
         //     }
         // }
 
-        if(count%prev==0) {
+        if(prev==0|| count%prev==0) {
             ans++;
         }
         return;
