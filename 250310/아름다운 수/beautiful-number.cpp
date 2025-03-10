@@ -69,7 +69,7 @@ int main() {
     cin >> n;
     continuous.assign(10, 0);
 
-    continuous[0]=1;//아름다운 수 되려면 0은 0번 나와야 함
+    continuous[0]=0;//아름다운 수 되려면 0은 0번 나와야 함
     
     backtracking(0,0);
 
