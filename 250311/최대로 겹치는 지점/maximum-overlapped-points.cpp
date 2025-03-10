@@ -12,7 +12,7 @@ void getMaxDup(){
         auto [from, to]=i;
 
         int newF=lower_bound(dotMap.begin(), dotMap.end(), from)-dotMap.begin();
-        int newT=lower_bound(dotMap.begin(), dotMap.end(), to+1)-dotMap.begin();
+        int newT=lower_bound(dotMap.begin(), dotMap.end(), to)-dotMap.begin();
         //cout<<newF<<" "<<newT<<"\n";
 
         for(int j=newF;j<=newT;j++) simul[j]++;
@@ -29,7 +29,7 @@ int main() {
         cin>>i.first>>i.second;
 
         dotMap.push_back(i.first);
-        dotMap.push_back(i.second+1);
+        dotMap.push_back(i.second);
     }
 
     sort(dotMap.begin(), dotMap.end());
