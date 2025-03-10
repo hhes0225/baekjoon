@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
-const int MAX=2200;
-const int offset=1100;
+const int MAX=20000;
+const int offset=10000;
 using namespace std;
 
 int n;
