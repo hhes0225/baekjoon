@@ -45,15 +45,20 @@ void backtracking(int prev, int depth){
     }
 
     for(int i=1;i<10;i++){
+        int keepPrevVal=continuous[prev];
         int keepCurVal=continuous[i];//백트래킹 원복용
 
         if(prev==i) continuous[i]++;
-        else continuous[i]=1;
+        else {
+            continuous[prev]=1;
+            continuous[i]++;
+        }
 
         //백트래킹
         backtracking(i, depth+1);
 
         //백트래킹 데이터 원복
+        continuous[prev]=keepPrevVal;
         continuous[i]=keepCurVal;
     }
     
