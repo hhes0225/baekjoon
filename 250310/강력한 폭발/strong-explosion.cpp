@@ -105,17 +105,8 @@ void recoverExplode3(int r, int c){
 }
 
 
-void backtracking(int r, int c, int depth){
-    if(depth==0){  
-        // cout<<"탈출\n";
-        // for(auto x:isExploded){
-        //     for(auto y:x){
-        //         cout<<y<<" ";
-        //     }
-        //     cout<<"\n";
-        // }
-        // cout<<"\n\n";
-              
+void backtracking(int depth){
+    if(depth==0){                
         //터진 칸 수 최댓값 업데이트
         int tmp=0;
 
@@ -130,28 +121,21 @@ void backtracking(int r, int c, int depth){
         return;
     }
 
-    for(int i=0;i<bombloc.size();i++){
-        auto [nextR, nextC]=bombloc[i];
+    auto [nextR, nextC]=bombloc[depth-1];
 
-        if(visited[nextR][nextC]) continue;//미방문 폭탄만 기폭
+    explode1(nextR, nextC);
+    backtracking(depth-1);
+    recoverExplode1(nextR, nextC);
+    
 
-        visited[nextR][nextC]=true;
+    explode2(nextR, nextC);
+    backtracking(depth-1);
+    recoverExplode2(nextR, nextC);
+    
 
-        explode1(nextR, nextC);
-        backtracking(nextR, nextC, depth-1);
-        recoverExplode1(nextR, nextC);
-        
-
-        explode2(nextR, nextC);
-        backtracking(nextR, nextC, depth-1);
-        recoverExplode2(nextR, nextC);
-        
-
-        explode3(nextR, nextC);
-        backtracking(nextR, nextC, depth-1);
-        recoverExplode3(nextR, nextC);
-        visited[nextR][nextC]=false;
-    }
+    explode3(nextR, nextC);
+    backtracking(depth-1);
+    recoverExplode3(nextR, nextC);
 
     return;
 }
@@ -172,7 +156,7 @@ int main() {
     }
 
     bombCnt=bombloc.size();
-    backtracking(0,0,bombCnt);
+    backtracking(bombCnt);
 
     cout<<ans<<"\n";
 
