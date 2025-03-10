@@ -124,7 +124,6 @@ void backtracking(int r, int c, int depth){
                 if(j!=0) tmp++;
             }
         }
-        //cout<<"최종 터진 칸 수는.. "<<tmp<<"\n";
 
         ans=max(ans, tmp);
 
@@ -139,40 +138,16 @@ void backtracking(int r, int c, int depth){
         visited[nextR][nextC]=true;
 
         explode1(nextR, nextC);
-        // cout<<"pop, 폭탄 유형 1, "<<depth<<"\n";
-        // for(auto x:isExploded){
-        //     for(auto y:x){
-        //         cout<<y<<" ";
-        //     }
-        //     cout<<"\n";
-        // }
-        // cout<<"\n\n";
         backtracking(nextR, nextC, depth-1);
         recoverExplode1(nextR, nextC);
         
 
         explode2(nextR, nextC);
-        // cout<<"폭탄 유형2, "<<depth<<"\n";
-        // for(auto x:isExploded){
-        //     for(auto y:x){
-        //         cout<<y<<" ";
-        //     }
-        //     cout<<"\n";
-        // }
-        //cout<<"\n\n";
         backtracking(nextR, nextC, depth-1);
         recoverExplode2(nextR, nextC);
         
 
         explode3(nextR, nextC);
-        // cout<<"폭탄 유형 3, "<<depth<<"\n";
-        // for(auto x:isExploded){
-        //     for(auto y:x){
-        //         cout<<y<<" ";
-        //     }
-        //     cout<<"\n";
-        // }
-        // cout<<"\n\n";
         backtracking(nextR, nextC, depth-1);
         recoverExplode3(nextR, nextC);
         visited[nextR][nextC]=false;
