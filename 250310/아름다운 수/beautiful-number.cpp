@@ -27,39 +27,45 @@ int n;
 vector<int> continuous;
 int ans=0;
 
-void backtracking(int prev, int depth){
+void backtracking(int prev, int depth, int count){
     bool isBeautiful=true;
     
     if(depth==n){
-        for(int i=1;i<10;i++){
-            if(continuous[i]%i!=0){
-                isBeautiful=false;
-                break;
-            }
-        }
+        // for(int i=1;i<10;i++){
+        //     if(continuous[i]%i!=0){
+        //         isBeautiful=false;
+        //         break;
+        //     }
+        // }
 
-        if(isBeautiful) {
+        if(count%prev==0) {
             ans++;
         }
         return;
     }
 
     for(int i=1;i<10;i++){
-        int keepPrevVal=continuous[prev];
-        int keepCurVal=continuous[i];//백트래킹 원복용
+        // int keepPrevVal=continuous[prev];
+        // int keepCurVal=continuous[i];//백트래킹 원복용
 
-        if(prev==i) continuous[i]++;
-        else {
-            continuous[prev]=1;
-            continuous[i]++;
+        // if(prev==i) continuous[i]++;
+        // else {
+        //     //continuous[prev]=1;
+        //     continuous[i]++;
+        // }
+
+        // //백트래킹
+        // backtracking(i, depth+1);
+
+        // //백트래킹 데이터 원복
+        // continuous[prev]=keepPrevVal;
+        // continuous[i]=keepCurVal;
+
+        if(depth==0) backtracking(depth+1, i, 1);
+        else{
+            if(i==prev) backtracking(depth+1, i, count+1);
+            else if(count%prev==0) backtracking(depth+1, i, 1);
         }
-
-        //백트래킹
-        backtracking(i, depth+1);
-
-        //백트래킹 데이터 원복
-        continuous[prev]=keepPrevVal;
-        continuous[i]=keepCurVal;
     }
     
     return;
@@ -71,7 +77,7 @@ int main() {
 
     continuous[0]=0;//아름다운 수 되려면 0은 0번 나와야 함
     
-    backtracking(0,0);
+    backtracking(0,0, 0);
 
     cout<<ans<<"\n";
 
