@@ -12,7 +12,7 @@ void getMaxDup(){
         auto [from, to]=i;
 
         int newF=lower_bound(dotMap.begin(), dotMap.end(), from)-dotMap.begin();
-        int newT=lower_bound(dotMap.begin(), dotMap.end(), to)-dotMap.begin();
+        int newT=lower_bound(dotMap.begin(), dotMap.end(), to+1)-dotMap.begin();
         //cout<<newF<<" "<<newT<<"\n";
 
         for(int j=newF;j<=newT;j++) simul[j]++;
