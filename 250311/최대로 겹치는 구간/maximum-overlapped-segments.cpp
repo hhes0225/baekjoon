@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-const int MAX=100;
+const int MAX=200;
 
 int n;
 vector<int> simul;
