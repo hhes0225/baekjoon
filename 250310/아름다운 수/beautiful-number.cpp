@@ -29,20 +29,10 @@ int ans=0;
 
 void backtracking(int prev, int depth){
     bool isBeautiful=true;
-
-    // for(auto c:continuous){
-    //     cout<<c<<" ";
-    // }
-    // cout<<"\n";
-
-    if(prev==0||depth!=n){
-        isBeautiful=false;
-    }
     
     if(depth==n){
         for(int i=1;i<10;i++){
             if(continuous[i]%i!=0){
-                //cout<<"연속되지 않음: "<<i<<", "<<continuous[i]<<"\n";
                 isBeautiful=false;
                 break;
             }
@@ -62,7 +52,6 @@ void backtracking(int prev, int depth){
 
         //백트래킹
         backtracking(i, depth+1);
-        //cout<<"pop!\n";
 
         //백트래킹 데이터 원복
         continuous[i]=keepCurVal;
