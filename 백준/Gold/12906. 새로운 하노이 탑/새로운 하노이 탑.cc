@@ -1,160 +1,152 @@
-#include <iostream>
-#include <queue>
-#include <set>
-#include <string>
+#include <bits/stdc++.h>
 using namespace std;
 
-struct State {
-	string A;
-	string B;
-	string C;
+/*
+    풀이과정:
+    A 원판은 A 막대에
+    B 원판은 B 막대에
+    C 원판은 C 막대에
+    이때, 원판 크기는 고려하지 않음
+
+    1. queue에 각 막대별 초기 상태와 이동 횟수를 push
+    2. q가 존재할 동안 loop
+    3. q에서 꺼낸 후 A B C 막대의 상태 조합해 방문상태 의미하는 문자열 생성
+    4. 목표를 달성하면(AA, BB, CC) 이동횟수 출력 후 종료
+    5. 방문하지 않은 상태라면 하노이 탑 과정 수행
+        - A막대 원판 존재하면 A 마지막 원판 B로 이동한 경우, C로 이동한 경우-> 2가지 경우 q에 저장
+        - B, C 막대에 대해서도 마찬가지
+
+    시간복잡도:
+
+
+    자료구조:
+    
+*/
+struct StickState{
+    string aStick="";
+    string bStick="";
+    string cStick="";
+    int moveCnt=0;
+
+    void toString(){
+        cout<<"State:\n";
+        cout<<aStick<<"\n";
+        cout<<bStick<<"\n";
+        cout<<cStick<<"\n";
+        cout<<"------------\n";
+    }
 };
 
-State Init;//초기 막대 3개
-set<pair<pair<string,string>,string>>check;
+//set<string> visited;
 
-bool Finish(string A, string B, string C) {
-	int Asize = A.size();
-	int Bsize = B.size();
-	int Csize = C.size();
-	if (Asize > 0) {
-		for (int i = 0; i < Asize; i++) {
-			if (A[i] != 'A')
-				return false;
-		}
-	}
-	if (Bsize > 0) {
-		for (int i = 0; i < Bsize; i++) {
-			if (B[i] != 'B')
-				return false;
-		}
-	}
-	if (Csize > 0) {
-		for (int i = 0; i < Csize; i++) {
-			if (C[i] != 'C')
-				return false;
-		}
-	}
-	return true;
+bool isGoalState(const string& A, const string& B, const string& C) {
+    for (char ch : A) {
+        if (ch != 'A') return false;
+    }
+    for (char ch : B) {
+        if (ch != 'B') return false;
+    }
+    for (char ch : C) {
+        if (ch != 'C') return false;
+    }
+    return true;
 }
 
-string MoveTop(string s) {
-	string tmp = "";
-	int sSize = s.size();
-	for (int i = 0; i < sSize - 1; i++) {
-		tmp += s[i];
-	}
-	return tmp;
+
+void newHanoi(StickState s){
+    queue<StickState> q;
+    set<string> visited;
+    visited.clear();
+    q.push({s.aStick, s.bStick, s.cStick, s.moveCnt});
+    //visited.insert(s.aStick+"/"+s.bStick+"/"+s.cStick);
+
+    while(!q.empty()){
+        StickState curState=q.front();
+        q.pop();
+
+        //curState.toString();
+
+        //만약 탈출 목표 달성하면 반복문 종료
+        if(isGoalState(curState.aStick, curState.bStick, curState.cStick)){
+            cout<<curState.moveCnt<<"\n";
+            break;
+        }
+
+        //visited에 없는 경우만 탐색하며 이미 했던 상태 반복하지 않음
+        string stateKey = curState.aStick + "/" + curState.bStick + "/" + curState.cStick;
+        if(visited.find(stateKey)==visited.end()){
+            visited.insert(stateKey);//현재 상태 방문 처리
+                
+            if(curState.aStick.size()!=0){//빈 문자열 아니면
+                char plate=curState.aStick.back();
+                string moveToB=curState.bStick+plate;
+                string moveToC=curState.cStick+plate;
+
+                //원판 뺀 상태가 빈 문자열일 경우 처리
+                string leftPlate = (curState.aStick.size() == 1) ? "" : curState.aStick.substr(0, curState.aStick.size()-1);
+
+                q.push({leftPlate, moveToB, curState.cStick, curState.moveCnt+1});
+                q.push({leftPlate, curState.bStick, moveToC, curState.moveCnt+1});
+            }
+            if(curState.bStick.size()!=0){//빈 문자열 아니면
+                char plate=curState.bStick.back();
+                string moveToA=curState.aStick+plate;
+                string moveToC=curState.cStick+plate;
+                
+                //원판 뺀 상태가 빈 문자열일 경우 처리
+                string leftPlate = (curState.bStick.size() == 1) ? "" : curState.bStick.substr(0, curState.bStick.size()-1);
+                
+                q.push({moveToA, leftPlate, curState.cStick, curState.moveCnt+1});
+                q.push({curState.aStick, leftPlate, moveToC, curState.moveCnt+1});
+            }
+            if(curState.cStick.size()!=0){//빈 문자열 아니면
+                char plate=curState.cStick.back();
+                string moveToA=curState.aStick+plate;
+                string moveToB=curState.bStick+plate;
+
+                //원판 뺀 상태가 빈 문자열일 경우 처리
+                string leftPlate = (curState.cStick.size() == 1) ? "" : curState.cStick.substr(0, curState.cStick.size()-1);
+                
+                q.push({moveToA, curState.bStick, leftPlate, curState.moveCnt+1});
+                q.push({curState.aStick, moveToB, leftPlate, curState.moveCnt+1});
+            }
+        }
+    }
 }
 
-int bfs() {
-	queue<pair<State,int>> q;//막대 상태와 움직임 횟수
-	q.push(make_pair(Init,0));
-	check.insert(make_pair(make_pair(Init.A,Init.B),Init.C));
-	while (!q.empty()) {
-		string A = q.front().first.A;
-		string B = q.front().first.B;
-		string C = q.front().first.C;
-		int cnt = q.front().second;
-		q.pop();
-		if (Finish(A, B, C))
-			return cnt;
-		//A에서 원판 옮기기
-		if (A.size() > 0) {
-			//B로 옮기기
-			string A_tmp = MoveTop(A);
-			string B_tmp = B + A[A.size() - 1];
-			State Stmp = { A_tmp,B_tmp,C };
-			//한 번도 나오지 않았던 조건이면 queue에 저장
-			if (check.find(make_pair(make_pair(A_tmp,B_tmp),C)) == check.end()) {
-				q.push(make_pair(Stmp, cnt + 1));
-				check.insert(make_pair(make_pair(A_tmp, B_tmp), C));
-			}
-			//C로 옮기기
-			string C_tmp = C + A[A.size() - 1];
-			Stmp = { A_tmp,B,C_tmp };
-			if (check.find(make_pair(make_pair(A_tmp, B), C_tmp)) == check.end()) {
-				q.push(make_pair(Stmp, cnt + 1));
-				check.insert(make_pair(make_pair(A_tmp, B), C_tmp));
-			}
-		}
-		//B에서 원판 옮기기
-		if (B.size() > 0) {
-			//A로 옮기기
-			string B_tmp = MoveTop(B);
-			string A_tmp = A + B[B.size() - 1];
-			State Stmp = { A_tmp,B_tmp,C };
-			if (check.find(make_pair(make_pair(A_tmp, B_tmp), C)) == check.end()) {
-				q.push(make_pair(Stmp, cnt + 1));
-				check.insert(make_pair(make_pair(A_tmp, B_tmp), C));
-			}
-			//C로 옮기기
-			string C_tmp = C + B[B.size() - 1];
-			Stmp = { A,B_tmp,C_tmp };
-			if (check.find(make_pair(make_pair(A_tmp, B), C_tmp)) == check.end()) {
-				q.push(make_pair(Stmp, cnt + 1));
-				check.insert(make_pair(make_pair(A_tmp, B), C_tmp));
-			}
-		}
-		//C에서 원판 옮기기
-		if (C.size() > 0) {
-			//A로 옮기기
-			string C_tmp = MoveTop(C);
-			string A_tmp = A + C[C.size() - 1];
-			State Stmp = { A_tmp,B,C_tmp };
-			if (check.find(make_pair(make_pair(A_tmp, B), C_tmp)) == check.end()) {
-				q.push(make_pair(Stmp, cnt + 1));
-				check.insert(make_pair(make_pair(A_tmp, B), C_tmp));
-			}
-			//B로 옮기기
-			string B_tmp = B + C[C.size() - 1];
-			Stmp = { A,B_tmp,C_tmp };
-			if (check.find(make_pair(make_pair(A, B_tmp), C_tmp)) == check.end()) {
-				q.push(make_pair(Stmp, cnt + 1));
-				check.insert(make_pair(make_pair(A, B_tmp), C_tmp));
-			}
-		}
-	}
-}
 
 int main() {
-	int n;
-	string s;
-	//입력
-	for (int i = 0; i < 3; i++) {
-		cin >> n;
-		//막대 A
-		if (i == 0) {
-			if (n == 0) {
-				Init.A = "";
-			}
-			else {
-				cin >> s;
-				Init.A = s;
-			}
-		}
-		//막대 B
-		else if (i == 1) {
-			if (n == 0) {
-				Init.B = "";
-			}
-			else {
-				cin >> s;
-				Init.B = s;
-			}
-		}
-		//막대 C
-		else {
-			if (n == 0) {
-				Init.C = "";
-			}
-			else {
-				cin >> s;
-				Init.C = s;
-			}
-		}
-	}
-	int ans = bfs();
-	cout << ans << '\n';
-	return 0;
+    int size;
+    StickState s;
+    
+    //A 막대
+    cin>>size;
+    if(size>0){
+        cin>>s.aStick;
+    }
+    else{
+        s.aStick="";
+    }
+
+    //B 막대
+    cin>>size;
+    if(size>0){
+        cin>>s.bStick;
+    }
+    else{
+        s.bStick="";
+    }
+
+    //C 막대
+    cin>>size;
+    if(size>0){
+        cin>>s.cStick;
+    }
+    else{
+        s.cStick="";
+    }
+    
+    newHanoi(s);
+    
+    return 0;
 }
