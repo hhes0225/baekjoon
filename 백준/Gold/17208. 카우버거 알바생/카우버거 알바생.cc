@@ -31,13 +31,22 @@ int getMaxOrder(int n, int m, int k){
     for(int o=1;o<=n;o++){
         auto [b, f]=orders[o];
 
-        for(int i=1;i<=m;i++){            
+        for(int i=1;i<=m;i++){
+            if(i-b<0){
+                for(int j=1;j<=k;j++){
+                    dp[o][i][j]=dp[o-1][i][j];
+                }
+                continue;
+            }
+            //현재 버거 재고로 버거 처리 불가능하면 패스
+            
             for(int j=1;j<=k;j++){
-                dp[o][i][j]=dp[o-1][i][j];
-                
                 if(i-b>=0 && j-f>=0){
                     //cout<<o<<"번째 주문 처리!\n";
-                    dp[o][i][j]=max(dp[o][i][j], dp[o-1][i-b][j-f]+1);
+                    dp[o][i][j]=max(dp[o-1][i][j], dp[o-1][i-b][j-f]+1);
+                }
+                else{
+                    dp[o][i][j]=dp[o-1][i][j];
                 }
             }
         }
