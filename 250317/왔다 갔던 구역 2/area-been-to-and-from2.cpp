@@ -23,9 +23,8 @@ int main() {
 
         if(dir=='L'){
             for(int i=0;i<=x;i++){
-                simul[cur-1]++;
-                
                 cur--;
+                simul[cur]++;
             }
         }
         if(dir=='R'){
