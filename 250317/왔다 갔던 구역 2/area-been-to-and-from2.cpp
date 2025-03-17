@@ -54,11 +54,12 @@ int main() {
     //         inGroup = false;
     //     }
     // }
-    /*
-    for(int i=985;i<1010;i++){
-        cout<<i-offset<<": "<<simul[i]<<"\n";
+    
+    for(int i=0;i<MAX;i++){
+        if(simul[i]>0)
+            cout<<i-offset<<": "<<simul[i]<<"\n";
     }
-    cout<<"\n";*/
+    cout<<"\n";
     
 
     cout<<ans-group<<"\n";
