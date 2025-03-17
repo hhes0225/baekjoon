@@ -32,9 +32,12 @@ int main() {
             cur++;
             for(int i=1;i<=x;i++){
                 simul[cur]++;
-                cur++;
+
+                if(i!=x)cur++;
             }   
         }
+
+        cout<<"cur: "<<cur-offset<<"\n";
     }
 
     int ans=0;
