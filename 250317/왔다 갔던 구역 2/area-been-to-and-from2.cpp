@@ -22,22 +22,21 @@ int main() {
         auto [x, dir]=c;
 
         if(dir=='L'){
-            cur--;
-            for(int i=1;i<=x;i++){
-                simul[cur]++;
+            for(int i=0;i<=x;i++){
+                simul[cur-1]++;
+                
                 cur--;
             }
         }
         if(dir=='R'){
-            cur++;
             for(int i=1;i<=x;i++){
                 simul[cur]++;
 
-                if(i!=x)cur++;
+                cur++;
             }   
         }
 
-        cout<<"cur: "<<cur-offset<<"\n";
+        //cout<<"cur: "<<cur-offset<<"\n";
     }
 
     int ans=0;
@@ -58,14 +57,14 @@ int main() {
     //     }
     // }
     
-    for(int i=0;i<MAX;i++){
-        if(simul[i]>0)
-            cout<<i-offset<<": "<<simul[i]<<"\n";
-    }
-    cout<<"\n";
+    // for(int i=0;i<MAX;i++){
+    //     if(simul[i]>0)
+    //         cout<<i-offset<<": "<<simul[i]<<"\n";
+    // }
+    //cout<<"\n";
     
 
-    cout<<ans-group<<"\n";
+    cout<<ans<<"\n";
 
     return 0;
 }
