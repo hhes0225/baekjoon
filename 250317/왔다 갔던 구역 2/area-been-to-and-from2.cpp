@@ -1,69 +1,56 @@
 #include <bits/stdc++.h>
-const int MAX=10000;
-const int offset=5000;
 using namespace std;
 
-int n;
-vector<pair<int, char>> command;
-vector<int> simul;
+const int SIZE = 10001; 
+const int OFFSET = 5000;
 
-int main() {
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n; 
     cin >> n;
-    command.resize(n);
-    simul.assign(MAX, 0);
 
-    for (auto& c:command) {
-        cin >> c.first>>c.second;
+    vector<pair<int, char>> command(n);
+    for(auto &c : command) {
+        cin >> c.first >> c.second; 
     }
 
-    int cur=offset;
+    // "구간" 방문 횟수를 기록할 배열
+    // visit[x] = "좌표 (x - OFFSET)에서 (x - OFFSET + 1)로 이어지는 구간"의 방문 횟수
+    static int visit[SIZE] = {0};  
 
-    for(auto c:command){
-        auto [x, dir]=c;
+    int cur = 0;  // 실제 좌표계에서 시작을 0으로 가정
 
-        if(dir=='L'){
-            for(int i=0;i<=x;i++){
-                cur--;
-                simul[cur]++;
+    for(auto &cmd : command){
+        int dist = cmd.first;
+        char dir = cmd.second;
+
+        if(dir == 'R'){
+            // 오른쪽으로 dist만큼 이동
+            // cur → cur+1 → cur+2 → ... → cur+dist
+            for(int i = 0; i < dist; i++){
+                // (cur, cur+1) 구간을 방문
+                visit[cur + OFFSET]++; 
+                cur++;
             }
         }
-        if(dir=='R'){
-            for(int i=1;i<=x;i++){
-                simul[cur]++;
-
-                cur++;
-            }   
+        else { // dir == 'L'
+            // 왼쪽으로 dist만큼 이동
+            // cur → cur-1 → cur-2 → ... → cur-dist
+            for(int i = 0; i < dist; i++){
+                // 먼저 왼쪽으로 이동한 뒤, (cur, cur+1) 구간을 체크
+                cur--;
+                visit[cur + OFFSET]++; 
+            }
         }
-
-        //cout<<"cur: "<<cur-offset<<"\n";
     }
 
-    int ans=0;
-    for(auto s:simul){
-        if(s>=2) ans++;
+    int ans = 0;
+    for(int i = 0; i < SIZE; i++){
+        if(visit[i] >= 2) ans++;
     }
 
-    int group=0;
-    // bool inGroup = false;
-    // for (int i = 0; i < MAX; i++) {
-    //     if (simul[i] >= 2) {
-    //         if (!inGroup) {
-    //             group++;
-    //             inGroup = true;
-    //         }
-    //     } else {
-    //         inGroup = false;
-    //     }
-    // }
-    
-    // for(int i=0;i<MAX;i++){
-    //     if(simul[i]>0)
-    //         cout<<i-offset<<": "<<simul[i]<<"\n";
-    // }
-    //cout<<"\n";
-    
-
-    cout<<ans<<"\n";
-
+    cout << ans << "\n";
     return 0;
 }
