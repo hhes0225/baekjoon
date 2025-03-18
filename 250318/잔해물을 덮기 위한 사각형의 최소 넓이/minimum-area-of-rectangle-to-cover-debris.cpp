@@ -30,7 +30,7 @@ int main() {
         }
     }
 
-    int left=INT_MAX, right=0, down=INT_MAX, up=0;
+    int left=INT_MAX, right=INT_MIN, down=INT_MAX, up=INT_MIN;
     for(int i=0;i<MAX;i++){
         for(int j=0;j<MAX;j++){
             if(axis[i][j]==1){
@@ -42,7 +42,20 @@ int main() {
         }
     }
 
-    int area=(right-left+1)*(up-down+1);
+    // for(auto i:axis){
+    //     bool isTrue=false;
+    //     for(auto j:i){
+    //         if(j>0 ) {cout<<j; isTrue=true;}
+    //     }
+    //     if(isTrue)cout<<"\n";
+    // }
+
+    int area;
+
+    if(left==INT_MAX||right==INT_MIN||down==INT_MAX||up==INT_MIN){
+        area=0;
+    }
+    else area=(right-left+1)*(up-down+1);
     cout<<area<<"\n";
 
     return 0;
