@@ -21,19 +21,19 @@ int main() {
 
     for(int i=rects[0].x1;i<rects[0].x2;i++){
         for(int j=rects[0].y1;j<rects[0].y2;j++){
-            axis[i][j]++;
+            axis[i+OFFSET][j+OFFSET]++;
         }
     }
 
     for(int i=rects[1].x1;i<rects[1].x2;i++){
         for(int j=rects[1].y1;j<rects[1].y2;j++){
-            axis[i][j]++;
+            axis[i+OFFSET][j+OFFSET]++;
         }
     }
 
     for(int i=rects[2].x1;i<rects[2].x2;i++){
         for(int j=rects[2].y1;j<rects[2].y2;j++){
-            axis[i][j]=0;
+            axis[i+OFFSET][j+OFFSET]=0;
         }
     }
 
