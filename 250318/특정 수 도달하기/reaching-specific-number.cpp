@@ -20,7 +20,7 @@ int main() {
 
     avg=(double)sum/(double)num;
 
-    cout<<sum<<" "<<avg<<"\n";
+    printf("%d %.1lf", sum, avg);
 
 
 
