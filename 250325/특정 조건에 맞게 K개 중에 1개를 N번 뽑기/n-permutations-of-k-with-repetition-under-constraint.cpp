@@ -17,16 +17,17 @@ void backtracking(int n){
     }
 
     for(int i=1;i<=K;i++){
-        if(dic[i]+1<3){//같은거 또 추가하면 3번이 되니까, 같은 건 0,1번까진 괜춘
-            dic[i]++;//연속 누적 카운트
-            choice.push_back(i);
-
-            backtracking(n-1);
-            
-            //데이터 원복
-            dic[i]--;
-            choice.pop_back();
+        if(choice.size()>=2&&choice.back()==i&&choice[choice.size()-2]==i){
+            continue;
         }
+        
+
+        choice.push_back(i);
+
+        backtracking(n-1);
+        
+        //데이터 원복
+        choice.pop_back();
 
     }
 }
