@@ -3,7 +3,7 @@
 using namespace std;
 
 string expression;
-int maxResult=0;
+int maxResult=INT_MIN;
 vector<int> nums;
 unordered_set<char> alpha;
 unordered_map<char, int> dict;
@@ -62,7 +62,6 @@ void backtracking(int leftCnt){
 }
 
 int main() {
-    int alphaCnt=0;
     cin >> expression;
 
     for(auto e:expression){
