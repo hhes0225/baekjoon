@@ -17,7 +17,7 @@ void backtracking(int n){
     }
 
     for(int i=1;i<=K;i++){
-        if(dic[i]<2){//같은거 또 추가하면 3번이 되니까, 같은 건 0,1번까진 괜춘
+        if(dic[i]+1<3){//같은거 또 추가하면 3번이 되니까, 같은 건 0,1번까진 괜춘
             dic[i]++;//연속 누적 카운트
             choice.push_back(i);
 
@@ -26,9 +26,6 @@ void backtracking(int n){
             //데이터 원복
             dic[i]--;
             choice.pop_back();
-        }
-        else{
-            dic[i]=0;//연속 카운트 초기화
         }
 
     }
