@@ -7,10 +7,7 @@ int maxChoice=0;
 vector<pair<int, int>> chosenLine;
 
 bool isDup(int x, int y, int u, int v){
-    if((x>=u&&x<=v)||(y>=u&&y<=v)){
-        return true;
-    }
-    return false;
+    return (y>=u&&x<=v);//겹치면 t, 안겹치면 f
 }
 
 void backtracking(int idx){   
@@ -34,6 +31,7 @@ void backtracking(int idx){
         if(isDup(curS, curE, c.first, c.second)){
             // cout<<curS<<", "<<curE<<"는 "<<c.first<<", "<<c.second<<"와 겹친다\n";
             canChoose=false;
+            break;
         }
     }
 
