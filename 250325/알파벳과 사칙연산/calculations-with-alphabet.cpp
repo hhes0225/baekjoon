@@ -5,14 +5,16 @@ using namespace std;
 string expression;
 int maxResult=0;
 vector<int> nums;
+unordered_set<char> alpha;
+unordered_map<char, int> dict;
+
 
 bool isAlpha(char c){
     return (c>='a'&&c<='f');
 }
 
 int calculate(vector<int>&nums, string expression){
-    int nIdx=1;
-    int result=nums[0];
+    int result=dict[expression[0]];
     char op;
 
     for(int i=1;i<expression.size();i++){
@@ -21,11 +23,10 @@ int calculate(vector<int>&nums, string expression){
         }
         else{
             switch(op){
-                case'+' : result+=nums[nIdx]; break;
-                case'-' : result-=nums[nIdx]; break;
-                case '*': result*=nums[nIdx]; break;
+                case'+' : result+=dict[expression[i]]; break;
+                case'-' : result-=dict[expression[i]]; break;
+                case '*': result*=dict[expression[i]]; break;
             }
-            nIdx++;
         }
     }
 
@@ -35,13 +36,14 @@ int calculate(vector<int>&nums, string expression){
 
 void backtracking(int leftCnt){
     if(leftCnt==0){
-        // for(auto i:nums){
-        //     cout<<i<<" ";
-        // }
-        // cout<<"\n";
+        int nIdx=0;
+
+        for(auto a:alpha){
+            dict[a]=nums[nIdx++];
+        }
         
         int result = calculate(nums, expression);
-        //cout<<calculate(nums, expression)<<"\n";
+        //cout<<result<<"\n";
 
         //계산
         maxResult=max(maxResult, result);
@@ -64,10 +66,10 @@ int main() {
     cin >> expression;
 
     for(auto e:expression){
-        if(e>='a'&&e<='f') alphaCnt++;
+        if(e>='a'&&e<='f') alpha.insert(e);
     }
 
-    backtracking(alphaCnt);
+    backtracking(alpha.size());
 
     cout<<maxResult<<"\n";
 
