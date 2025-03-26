@@ -39,37 +39,37 @@ void backtracking(int r, int c, int prevCoin, int dist){
         int nextC=c+dc[i];
         
 
-        if(nextR>=0&&nextR<N&&nextC>=0&&nextC<N){
-            if(visited[nextR][nextC]) continue;
+        if(nextR<0||nextR>=N||nextC<0||nextC>=N) continue;
 
-            char coinVal=grid[nextR][nextC];
-            //cout<<"coinVal: "<<coinVal<<"\n";
-            if(coinVal=='E'){
-                //증가하는 순서대로만 동전 수집 가능
-                //해당 칸 동전 수집할 때
-                visited[nextR][nextC]=true;
-                backtracking(nextR, nextC, coinVal-'0', dist+1);
+        if(visited[nextR][nextC]) continue;
 
-                visited[nextR][nextC]=false;
-                
-            }
-            if(coinVal>='0'&&coinVal<='9'&&prevCoin<coinVal-'0'){
-                //증가하는 순서대로만 동전 수집 가능
-                //해당 칸 동전 수집할 때
-                visited[nextR][nextC]=true;
-                choice.push_back(coinVal-'0');
-                backtracking(nextR, nextC, coinVal-'0', dist+1);
-
-                visited[nextR][nextC]=false;
-                choice.pop_back();
-            }
-            
-
+        char coinVal=grid[nextR][nextC];
+        
+        if(coinVal=='E'){
+            //증가하는 순서대로만 동전 수집 가능
+            //해당 칸 동전 수집할 때
             visited[nextR][nextC]=true;
-            //해당 칸 동전 수집하지 않을 때
-            backtracking(nextR, nextC, prevCoin, dist+1);
+            backtracking(nextR, nextC, coinVal-'0', dist+1);
+
             visited[nextR][nextC]=false;
+            
         }
+        if(coinVal>='0'&&coinVal<='9'&&prevCoin<coinVal-'0'){
+            //증가하는 순서대로만 동전 수집 가능
+            //해당 칸 동전 수집할 때
+            visited[nextR][nextC]=true;
+            choice.push_back(coinVal-'0');
+            backtracking(nextR, nextC, coinVal-'0', dist+1);
+
+            visited[nextR][nextC]=false;
+            choice.pop_back();
+        }
+        
+
+        visited[nextR][nextC]=true;
+        //해당 칸 동전 수집하지 않을 때
+        backtracking(nextR, nextC, prevCoin, dist+1);
+        visited[nextR][nextC]=false;
 
         
     }
