@@ -14,6 +14,7 @@ vector<int> choice;
 vector<vector<bool>> visited;
 
 void backtracking(int r, int c, int prevCoin, int dist){
+    if(dist>=minDist) return;
     //탈출조건
     if(grid[r][c]=='E'){
         if(choice.size()>=3){
