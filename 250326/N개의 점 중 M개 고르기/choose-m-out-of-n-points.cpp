@@ -17,20 +17,18 @@ int getDist(int x1, int y1, int x2, int y2){
 int groupMaxDist(){
     int tmpDist=0;
 
-    for(auto c:choice) cout<<c.first<<" "<<c.second<<"\n";
-    cout<<"\n";
+    // for(auto c:choice) cout<<c.first<<" "<<c.second<<"\n";
+    // cout<<"\n";
 
     for(int i=0;i<m;i++){
         auto [x1, y1]=choice[i];
         for(int j=i+1;j<m;j++){
             auto [x2,y2]=choice[j];
-            cout<<x1<<" "<<y1<<" "<<x2<<" "<<y2<<": "<<getDist(x1,y1,x2,y2)<<"\n";
+            // cout<<x1<<" "<<y1<<" "<<x2<<" "<<y2<<": "<<getDist(x1,y1,x2,y2)<<"\n";
             tmpDist=max(tmpDist, getDist(x1,y1,x2,y2));
         }
-
-        
     }
-    
+    return tmpDist;
 }
 
 
