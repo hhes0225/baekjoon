@@ -81,6 +81,7 @@ int main() {
     for(int i=0;i<N;i++){
         for(int j=0;j<N;j++){
             if(grid[i][j]=='S'){
+                visited[i][j]=true;
                 backtracking(i,j,0,0);
             }
         }
