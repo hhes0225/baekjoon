@@ -1,122 +1,87 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n, m, r;
 vector<vector<int>> board;
-vector<vector<char>> bStatus;
+vector<vector<char>> status;
+int n, m, r;
+map<char, pair<int, int>> direction={
+    {'E', {0,1}},
+    {'W', {0,-1}},
+    {'S', {1,0}},
+    {'N', {-1,0}}
+};
 int score=0;
 
-void printBoard(){
-    for(auto i:bStatus){
+void print(){
+    for(auto i:status){
         for(auto j:i) cout<<j<<" ";
         cout<<"\n";
     }
-    // cout<<"------------\n";
+
+    cout<<"\n";
 }
 
 void attack(int r, int c, char dir){
-    int amt=board[r][c];
+    queue<pair<int, int>> domino;
 
-    // cout<<"위치: "<<r<<" "<<c<<"\n";
-
-    if(bStatus[r][c]=='F') return;//이미 쓰러진 칸 공격. 아무 일 X
+    int dr=direction[dir].first;
+    int dc=direction[dir].second;
     
-    if(dir=='E'){//행고정, 열만
-        while(c<m && amt>0){
-            if(bStatus[r][c]=='F') {
-                c++; amt--;
-                continue;
-            }
-
-            amt=max(amt-1, board[r][c]);
-
-            bStatus[r][c]='F';//쓰러뜨림
-            c++;
-            score++;
-        }
+    domino.push({r, c});//처음에 넘어뜨리는 양
         
-    }
-    else if(dir=='W'){//행고정, 열만
-        while(c>=0 && amt>0){
-            if(bStatus[r][c]=='F') {
-                c--; amt--;
-                continue;
-            }
+    while(!domino.empty()){
+        auto [r,c]=domino.front();
+        domino.pop();
+        int knock=board[r][c];
 
-            amt=max(amt-1, board[r][c]-1);
-            
-            bStatus[r][c]='F';//쓰러뜨림
-            c--;score++;
-        }
-    }
-    else if(dir=='S'){//열고정, 행만
-        while(r<n && amt>0){
-            if(bStatus[r][c]=='F') {
-                r++; amt--;
-                continue;
-            }
-            
-            amt=max(amt-1, board[r][c]-1);
-            
-            bStatus[r][c]='F';//쓰러뜨림
-            r++;score++;
-        }
-    }
-    else{//dir=='N' | 열고정, 행만
-        while(r>=0 && amt>0){
-            // cout<<r<<" "<<c<<" "<<amt<<" "<<board[r][c]<<"\n";
-            if(bStatus[r][c]=='F'){//이미 쓰러져있다면
-                r--;amt--;
-                continue;
-            }
+        for(int i=0;i<knock;i++){
+            int nextR=r+dr*i;
+            int nextC=c+dc*i;
 
-            amt=max(amt-1, board[r][c]-1);
+            if(nextR<0||nextR>=n||nextC<0||nextC>=m) break;
             
-            bStatus[r][c]='F';//쓰러뜨림
-            score++;//쓰러뜨리지 않은 칸을 쓰러뜨린거라면
-            r--;
+            if(status[nextR][nextC]=='S'){
+                score++;
+                status[nextR][nextC]='F';
+                domino.push({nextR, nextC});
+            }
         }
     }
 }
 
 void defence(int r, int c){
-    bStatus[r][c]='S';
-}
-
-void deathGame(int n, int m, int r){
-
-    for(int i=0;i<r;i++){
-        int r, c;
-        char dir;
-        //공격
-        cin>>r>>c>>dir;
-        attack(r-1, c-1, dir);
-
-        //수비
-        cin>>r>>c;
-        defence(r-1,c-1);
-        // printBoard();
-    }
+    status[r][c]='S';
 }
 
 int main() {
-
+    
     cin>>n>>m>>r;
 
     board.resize(n, vector<int>(m));
-    bStatus.assign(n, vector<char>(m, 'S'));
+    status.assign(n, vector<char>(m, 'S'));
 
-    for(auto&i:board){
-        for(auto&j:i) cin>>j;
+    for(auto &i:board){
+        for(auto &j:i) cin>>j;
     }
 
-    
-    deathGame(n,m,r);
+    for(int i=0;i<r;i++){
+        //공격
+        int x, y;
+        char d;
+        cin>>x>>y>>d;
+        attack(x-1,y-1,d);
+        // print();
+
+        //수비
+        cin>>x>>y;
+        defence(x-1,y-1);
+        // print();
+        
+        // cout<<"================\n";
+    }
 
     cout<<score<<"\n";
-    
-    printBoard();
-    
+    print();
     
     return 0;
 }
