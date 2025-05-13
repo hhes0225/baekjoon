@@ -2,68 +2,47 @@
 using namespace std;
 
 int main() {
-    int n,w,l;
+    int n, w, l;
     cin>>n>>w>>l;
 
-    queue<int> cars;
+    queue<int> truck;
+    deque<pair<int, int>> bridge;
 
     for(int i=0;i<n;i++){
-        int tmp;
-        cin>>tmp;
-        cars.push(tmp);
+        int a;
+        cin>>a;
+        truck.push(a);
     }
-    
-    vector<int> timeline;
-    timeline.push_back(0);
 
-    int prevStart=2;
-    
-    for(int i=0;i<w;i++){
-        timeline.push_back(cars.front());
+    int cnt=0, total=0;
+
+    while(1){
+        if(truck.empty() && bridge.empty()){
+            cout<<cnt+1;
+            break;
+        } else cnt++;
+
+        //대기중인 트럭이 있고,
+        //무게 하중이 버틸 수 있는 경우 다리에 올리기
+        if(!truck.empty() && total+truck.front()<=l){
+            bridge.push_back({truck.front(), 0});
+            total+=truck.front();
+            truck.pop();
+        }
+
+        //앞으로 한칸씩 전진
+        for(int i=0;i<bridge.size();i++){
+            bridge[i].second++;
+        }
+
+        //다리 빠져나왔을 경우
+        //총 다리에 올라와있는 차 무게에서 빠져나온 트럭 무게 제거
+        //브리지에서 빼기
+        if(bridge.front().second==w){
+            total-=bridge.front().first;
+            bridge.pop_front();
+        }
     }
-    cars.pop();
-    
-
-    while(!cars.empty()){
-        int carWeight=cars.front();
-        cars.pop();
-
-        for(int i=prevStart;i<timeline.size();i++){
-            if(timeline[i]+carWeight<=l){
-                prevStart=i;
-                break;
-            }
-        }
-
-        if(timeline[prevStart]+carWeight<=l){
-            int dup=timeline.size()-prevStart;
-
-            for(int i=0;i<dup;i++){
-                timeline[i+prevStart]+=carWeight;
-            }
-
-            prevStart++;
-
-            int left=w-dup;
-            for(int i=0;i<left;i++){
-                timeline.push_back(carWeight);
-            }
-
-        }
-        else{
-            
-            prevStart=timeline.size()+1;
-            for(int i=0;i<w;i++){
-                timeline.push_back(carWeight);
-            }
-        }
-    }    
-
-    // for(auto i:timeline) cout<<i<<" ";
-    // cout<<"\n";
-
-    cout<<timeline.size()<<"\n";
-    
     
     return 0;
 }
