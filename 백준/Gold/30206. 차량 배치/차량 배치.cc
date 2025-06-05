@@ -70,10 +70,6 @@ int main() {
         adjList[to].push_back(from);
     }
 
-    for(auto a:adjList){
-        sort(a.begin(), a.end());
-    }
-
     bfs(1);
 
     //0은 없는 노드이므로 제외
@@ -81,6 +77,8 @@ int main() {
         depth[visited[i]]++;
     }
 
+    //Q. MOD는 int 범위인데 ans를 ll로 두어야 하는 이유?
+    //곱셈 중간 결과 (ans*(d.second+1))에서 오버플로 발생할 수 있기 때문?
     long long ans=1;
     for(auto d:depth){
         ans=(ans*(d.second+1))%MOD;
