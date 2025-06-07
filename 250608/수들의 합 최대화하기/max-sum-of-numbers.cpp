@@ -4,11 +4,12 @@ using namespace std;
 int n;
 vector<vector<int>> grid;
 vector<int> nums;
-vector<vector<bool>> visited;
+vector<int> visitedRow;
+vector<int> visitedCol;
 int maxSum=0;
 
-int dr[5]={-1,1,0,0};
-int dc[5]={0,0,-1,1};
+int dr[5]={0, -1,1,0,0};
+int dc[5]={0,0,0,-1,1};
 
 void backtracking(int colored, int r, int c){
     if(colored==0){
@@ -16,32 +17,58 @@ void backtracking(int colored, int r, int c){
 
         for(auto n:nums) tmp+=n;
         maxSum=max(maxSum, tmp);
+        
+        // for(auto n:nums) cout<<n<<" ";
+        // cout<<"="<<tmp<<"\n";
 
         return;
     }
 
-    for(int i=0;i<4;i++){
-        int nextR=r+dr[i];
-        int nextC=c+dc[i];
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            if(visitedRow[i] || visitedCol[j]) continue;
 
-        if(nextR<0||nextR>=n||nextC<0||nextC>=n) continue;
-        if(visited[nextR][nextC]) continue;
+            // cout<<"컷안됐다\n";
 
-        visited[nextR][nextC]=true;
-        nums.push_back(grid[nextR][nextC]);
+            visitedRow[i]=true;
+            visitedCol[j]=true;
+            nums.push_back(grid[i][j]); 
+            // cout<<nums.back()<<"\n";
 
-        backtracking(colored-1, nextR, nextC);
+            backtracking(colored-1, i, j);
 
-        visited[nextR][nextC]=false;
-        nums.pop_back();
+            visitedRow[i]=false;
+            visitedCol[j]=false;
+            nums.pop_back();
+        }
     }
+    // for(int i=0;i<5;i++){
+    //     int nextR=r+dr[i];
+    //     int nextC=c+dc[i];
+
+    //     if(nextR<0||nextR>=n||nextC<0||nextC>=n) continue;
+    //     if(visitedRow[nextR] || visitedCol[nextC]) continue;
+
+    //     // cout<<"컷안됐다\n";
+
+    //     visitedRow[nextR]=true;
+    //     visitedCol[nextC]=true;
+    //     nums.push_back(grid[nextR][nextC]); cout<<nums.back()<<"\n";
+
+    //     backtracking(colored-1, nextR, nextC);
+
+    //     visitedRow[nextR]=false;
+    //     visitedCol[nextC]=false;
+    //     nums.pop_back();
+    // }
 }
 
 int main() {
     cin >> n;
 
     grid.resize(n, vector<int>(n));
-    visited.assign(n, vector<bool>(n, false));
+    visitedRow.assign(n, false);
+    visitedCol.assign(n, false);
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             cin >> grid[i][j];
@@ -49,7 +76,7 @@ int main() {
     }
 
     // Please write your code here.
-    backtracking(n, -1,-1);
+    backtracking(n, 0,0);
     cout<<maxSum<<"\n";
 
     return 0;
