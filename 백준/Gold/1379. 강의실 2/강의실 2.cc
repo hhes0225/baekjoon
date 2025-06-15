@@ -10,11 +10,10 @@ struct Lecture{
 
 struct compare{
     bool operator()(Lecture&a, Lecture&b){
-        return a.to>b.to;//pq에서는 오름차순으로 동
+        return a.to>b.to;//pq에서는 오름차순으로 동작 
     }
 };
 
-vector<Lecture> lecs_unsorted;
 vector<Lecture> lecs;
 
 int main() {
@@ -25,10 +24,8 @@ int main() {
         int d,f,t;
         cin>>d>>f>>t;
 
-        lecs_unsorted.push_back({d,f,t,0});
+        lecs.push_back({d,f,t,0});
     }
-
-    lecs=lecs_unsorted;
 
     //시작 순서 기준으로 오름차순 정렬
     sort(lecs.begin(), lecs.end(), [](Lecture a, Lecture b){
@@ -48,8 +45,9 @@ int main() {
         }
         else{
             auto earliestEnd=pq.top();
-
             // cout<<earliestEnd.from<<" "<<earliestEnd.to<<" "<<earliestEnd.assigned<<"\n";
+
+            
             //한 강의 종료시간과 다른 강의 시작시간 겹치는 것은 상관없음
             if(earliestEnd.to<=l.from){
                 l.assigned=earliestEnd.assigned;//강의에 교실 배정
@@ -66,11 +64,12 @@ int main() {
         }
     }
 
-    cout<<pq.size()<<"\n";
-
     // for(auto [i,f,t,a]:lecs){
     //     cout<<i<<" "<<f<<" "<<t<<" "<<a<<"\n";
     // }
+
+    
+    cout<<pq.size()<<"\n";
 
     //강의 번호 1~n 순서로 출력하기 위해 재정렬
     //처음에 입력순인줄 알고 unordered_map 사용했더니 73%에서 틀렸습니다 뜸
