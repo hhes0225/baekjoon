@@ -16,7 +16,6 @@ struct compare{
 
 vector<Lecture> lecs_unsorted;
 vector<Lecture> lecs;
-unordered_map<int, Lecture> lecInfo;
 
 int main() {
     int n;
@@ -53,11 +52,12 @@ int main() {
             // cout<<earliestEnd.from<<" "<<earliestEnd.to<<" "<<earliestEnd.assigned<<"\n";
             //한 강의 종료시간과 다른 강의 시작시간 겹치는 것은 상관없음
             if(earliestEnd.to<=l.from){
-                l.assigned=earliestEnd.assigned;
-                earliestEnd.to=l.to;
+                l.assigned=earliestEnd.assigned;//강의에 교실 배정
+                earliestEnd.to=l.to;//종료시간 갱신
+
+                //바뀐 종료시간 기준으로 갱신
                 pq.push(earliestEnd);
                 pq.pop();
-                
             }
             else{//겹치는 경우
                 l.assigned=pq.size()+1;
@@ -72,18 +72,9 @@ int main() {
     //     cout<<i<<" "<<f<<" "<<t<<" "<<a<<"\n";
     // }
 
-    //  for(auto l:lecs){
-    //      lecInfo[l.id]=l;
-    //  }
-
-    // for(auto &l:lecs_unsorted){
-    //     l.assigned=lecInfo[l.id].assigned;
-    // }
-
-    // for(auto l:lecs_unsorted){
-    //     cout<<l.assigned<<"\n";
-    // }
-
+    //강의 번호 1~n 순서로 출력하기 위해 재정렬
+    //처음에 입력순인줄 알고 unordered_map 사용했더니 73%에서 틀렸습니다 뜸
+    //(강의 번호 기준 오름차순)
     sort(lecs.begin(), lecs.end(), [](Lecture a, Lecture b){
        return a.id<b.id; 
     });
