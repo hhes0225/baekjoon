@@ -17,7 +17,12 @@ vector<int> child;
 vector<vector<int>> generation;
 
 
+/*
 
+    child: n을 루트로 한 서브트리 구성 노드 개수(자기 자신을 포함한 총 자식 개수)
+    parent: n의 부모노드
+    generation[gen]: gen 세대에 속하는 노드 리스트
+*/
 void dfs(int n, int p, int gen){
     child[n]=1;
     parent[n]=p;
@@ -69,13 +74,16 @@ int main() {
     //     cout<<"\n";
     // }
 
+    //child: 가지치기 후 현재 남아있는 실제 서브트기 크기
+    //childCpy: 원래 서브트리 크
     vector<int> childCpy=child;
 
     int sub=0;
 
+    //가장 후세대(깊은 노드)부터 순회
     for(int i=n;i>0;i--){
-        priority_queue<PII, vector<PII>, greater<PII>> pq;
-
+        priority_queue<PII, vector<PII>, greater<PII>> pq;//자식 가장 적은 노드부터 제거
+        
         for(auto j:generation[i]){
             if(j != 1) pq.push({child[j],j});
         }
@@ -84,10 +92,19 @@ int main() {
             auto [childs, node]=pq.top();
             pq.pop();
             
-            sub+=childs;
+            sub+=childs;//제거할 노드의 자식들 더해주고
 
             if(parent[node] !=0)
-                child[parent[node]]-=childCpy[node];
+                child[parent[node]]-=childCpy[node];//이를 부모 노드에 반영
+            //cpy를 빼야 할아버지 세대도 정확하게 끊어진 것을 반영 가능함
+
+            /*
+                그런데 만약 부모의 child[] 값을 단순히 childs(= 현재 남은 서브트리 크기) 만큼만 뺀다면...
+
+                이미 손자 중 몇 명이 다른 레벨에서 먼저 잘려 나간 경우,
+                childs는 이미 줄어든 값이기 때문에
+                할아버지(그 위 조상) 레벨에서는 실제로 없어진 자손 수를 제대로 반영 못하게 됩니다.
+            */
         }
     }
 
