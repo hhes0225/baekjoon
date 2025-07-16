@@ -17,21 +17,26 @@ void dpFunc(int maxVal){
     //초기값
     dp[0]=0;//전부 안내는 경우
     
+    // why??
     // for(auto c:coins){
     //     auto [val, quantity]=c;
 
     //     for(int i=1;i<=quantity;i++){
-    //         dp[val*i]=true;//한 동전으로만 구성된 경우
+    //         dp[val*i]=quantity-i;//한 동전으로만 구성된 경우
+    //         //그 때 사용할 수 있는 나머지 동전 저장
     //     }
     // }
 
     for(auto c:coins){
         auto [val, quantity]=c;
-        
+
+        //각 동전 케이스에 대한 수량체크
+        //(전체개수x-전체 개수는 추적 필요 X)
         for(int i=0;i<=maxVal;i++){
-            if(dp[i]>=0) dp[i]=quantity;//이만큼의 동전 쓸 수 있음
-            else if(i<val || dp[i-val]<=0){
-                dp[i]=-1;//만들기 불가
+            if(dp[i]>=0) dp[i]=quantity;
+                //동전 안쓰고도 이미 만들 수 있는 경우. 해당 유형 동전 전부 쓸 수 있음
+            else if(i<val || dp[i-val]<=0){//만들기 불가
+                dp[i]=-1;
             }
             else dp[i]=dp[i-val]-1;//동전 하나 써서 만듦->남은 개수 감소       
         }
