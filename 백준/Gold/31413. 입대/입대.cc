@@ -2,9 +2,6 @@
 using namespace std;
 
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-
     int N;
     long long M;
     cin >> N >> M;
@@ -18,7 +15,6 @@ int main() {
     int D;
     cin >> A >> D;
 
-    // ceil(N / D)
     int upper = (N + D - 1) / D;
 
     // dp[j][k]: 최대 j번 A를 사용하여 시점 k까지 얻을 수 있는 최대 점수
