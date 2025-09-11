@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -79,7 +78,7 @@ int main() {
         }
         
         // prev = curr로 업데이트
-        prev = curr;
+        swap(prev, curr);
     }
     
     // 모든 숫자를 사용한 상태에서의 최대값 출력
