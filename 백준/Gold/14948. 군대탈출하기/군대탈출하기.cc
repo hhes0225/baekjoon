@@ -24,6 +24,8 @@ const int JUMPED=1;
 bool bfs(int n, int m, int limit){
     visited.assign(n, vector<vector<bool>>(m, vector<bool>(2, false)));
     
+    //이거 안하면 21%에서 틀림
+    //내가 처음에 서 있는 지점도 레벨제한 걸리면 바로 리턴
     if(grid[0][0]>limit) return false;
     
     visited[0][0][NOTJUMPED]=true;
