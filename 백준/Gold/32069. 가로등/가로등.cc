@@ -39,7 +39,7 @@ int main() {
                 ll rightCheck=lights[i]+check;
                 
                 //범위 내면서 이미 체크하지 않은 경우
-                if(leftCheck>0 
+                if(leftCheck>=0 
                 && checkedPosition.find(leftCheck)==checkedPosition.end()){
                     minDarkness.push(check);
                     checkedPosition.insert(leftCheck);
