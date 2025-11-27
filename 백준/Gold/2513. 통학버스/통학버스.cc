@@ -11,8 +11,8 @@ int main() {
     
     
     vector<PII> apt;
-    priority_queue<PII> leftApt;
-    priority_queue<PII> rightApt;
+    vector<PII> leftApt;
+    vector<PII> rightApt;
     
     apt.resize(n);
     
@@ -24,19 +24,22 @@ int main() {
         auto [pos, stu]=a;
         
         if(pos<s){//left
-            leftApt.push({abs(pos-s), stu});    
+            leftApt.push_back({abs(pos-s), stu});    
         }
         else{//right
-            rightApt.push({abs(pos-s), stu});
+            rightApt.push_back({abs(pos-s), stu});
         }
     }
+    
+    sort(leftApt.begin(), leftApt.end());
+    sort(rightApt.begin(), rightApt.end());
     
     //한번에 멀리 갔다가 돌아오는길에 가까운애들 픽업
     while(!leftApt.empty()){//학교 왼쪽 아파트 순회
         int curStudent=0;
         
-        auto[d, s]=leftApt.top();
-        leftApt.pop();
+        auto[d, s]=leftApt.back();
+        leftApt.pop_back();
         
         totalDistance+=(d*2);
         
@@ -44,13 +47,13 @@ int main() {
             curStudent+=s;
         }
         else{
-            leftApt.push({d, s-k});
+            leftApt.push_back({d, s-k});
             continue;
         }
         
         while(curStudent<k&& !leftApt.empty()){//스쿨버스 정원 찰 때까지 태우기
-            auto[nd, ns]=leftApt.top();
-            leftApt.pop();
+            auto[nd, ns]=leftApt.back();
+            leftApt.pop_back();
 
             //빈자리에 다 태울 수 있으면 다 태우고 아파트 큐에서 뺌
             if(k-curStudent>=ns){
@@ -58,7 +61,7 @@ int main() {
             }
             else{//빈자리에 다 못태우면 아파트 큐에 그대로 둠
                 int rest=abs(ns-(k-curStudent));
-                leftApt.push({nd, rest});
+                leftApt.push_back({nd, rest});
                 break;
             }
         }
@@ -70,8 +73,8 @@ int main() {
         //출발지(원래 사람 태우고 있더라도 내리고 다시 출발발)
         int curStudent=0;
         
-        auto[d, s]=rightApt.top();
-        rightApt.pop();
+        auto[d, s]=rightApt.back();
+        rightApt.pop_back();
         
         totalDistance+=(d*2);
         
@@ -79,14 +82,14 @@ int main() {
             curStudent+=s;
         }
         else{
-            rightApt.push({d, s-k});
+            rightApt.push_back({d, s-k});
             continue;
         }
         
         
         while(curStudent<k && !rightApt.empty()){//스쿨버스 정원 찰 때까지 태우기
-            auto[nd, ns]=rightApt.top();
-            rightApt.pop();
+            auto[nd, ns]=rightApt.back();
+            rightApt.pop_back();
 
             
             //빈자리에 다 태울 수 있으면 다 태우고 아파트 큐에서 뺌
@@ -95,7 +98,7 @@ int main() {
             }
             else{//빈자리에 다 못태우면 아파트 큐에 다시 푸시
                 int rest=abs(ns-(k-curStudent));
-                rightApt.push({nd, rest});
+                rightApt.push_back({nd, rest});
                 break;
             }
 
